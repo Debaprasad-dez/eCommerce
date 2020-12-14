@@ -7,8 +7,9 @@ from product.models import *
 def index(request):
     setting = Setting.objects.get(pk=1)
     category = Category.objects.all()
+    product_slider = Product.objects.all().order_by('-id')[:4]
     page = "home"
-    context = {'setting': setting, 'page': page, 'category': category}
+    context = {'setting': setting, 'page': page, 'category': category, 'product_slider': product_slider}
     return render(request, 'eshop/home.html', context)
 
 def aboutus(request):
