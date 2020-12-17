@@ -49,10 +49,12 @@ class Product(models.Model):
         ('False', 'False'),
     )
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    title = models.CharField(max_length=50)
+    brand_name = models.CharField(max_length=50)
+    title = models.CharField(max_length=150)
     keywords = models.CharField(max_length=255)
     description = models.TextField()
     image = models.ImageField(upload_to='images/', blank=True)
+    prevprice = models.FloatField()
     price = models.FloatField()
     amount = models.IntegerField()
     minamount = models.IntegerField()

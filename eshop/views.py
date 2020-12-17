@@ -9,9 +9,9 @@ def index(request):
     category = Category.objects.all()
     product_slider = Product.objects.all().order_by('-id')[:4]
     product_picked = Product.objects.all().filter(featured=True).order_by('-id')[:4]
-    product_featured = Product.objects.all().order_by('?')[:4]
+    product_trending = Product.objects.all().order_by('?')[:12]
     page = "home"
-    context = {'setting': setting, 'page': page, 'category': category, 'product_slider': product_slider, 'product_picked':product_picked, 'product_featured':product_featured }
+    context = {'setting': setting, 'page': page, 'category': category, 'product_slider': product_slider, 'range': range(1, len(product_slider)), 'product_picked':product_picked, 'product_trending':product_trending }
     return render(request, 'eshop/home.html', context)
 
 def aboutus(request):
