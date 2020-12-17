@@ -245,8 +245,6 @@ Version:1.0
 }
 /* Logo */
 .header .logo {
-  font-family: 'Bolognaise' !important;
-  font-size: 50px !important;
   float: left;
   margin-top: 35px;
   -webkit-transition: all 0.4s ease;
@@ -290,6 +288,31 @@ Version:1.0
   margin: 0;
 }
 .header .nav li:hover .dropdown {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0px);
+}
+.header .nav li .dropdown li .dropdown2 {
+  background: #fff;
+  width: 220px;
+  position: absolute;
+  top: 100%;
+  z-index: 999;
+  -webkit-box-shadow: 0px 3px 5px #3333334d;
+  -moz-box-shadow: 0px 3px 5px #3333334d;
+  box-shadow: 0px 3px 5px #3333334d;
+  transform-origin: 0 0 0;
+  transform: scaleY(0.2);
+  -webkit-transition: all 0.3s ease 0s;
+  -moz-transition: all 0.3s ease 0s;
+  transition: all 0.3s ease 0s;
+  opacity: 0;
+  visibility: hidden;
+  padding: 10px;
+  left: 100%;
+  margin: 0;
+}
+.header .nav li:hover .dropdown li:hover .dropdown2 {
   opacity: 1;
   visibility: visible;
   transform: translateY(0px);
@@ -992,6 +1015,15 @@ Version:1.0
   margin: 0;
 }
 .header.shop .nav li .dropdown li:hover a {
+  background: #f7941d;
+}
+.header.shop .nav li .dropdown :hover .dropdown2 li a {
+  color: #333;
+  padding: 8px 15px;
+  font-weight: 400;
+  background: #fff;
+}
+.header.shop .nav li .dropdown li:hover .dropdown2 li:hover a {
   background: #f7941d;
 }
 .header.shop.v2 .nav li.active .dropdown li a {

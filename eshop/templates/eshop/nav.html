@@ -69,7 +69,7 @@
                                                     {% recursetree category %}
                                                     <li><a href="/category/{{ node.id }}/{{ node.slug }}">{{ node.title }}</a>
                                                         {% if not node.is_leaf_node %}
-                                                            <ul  class="dropdown-toggle" data-toggle="dropdown">
+                                                            <ul class="dropdown2">
                                                                 <li>{{ children }}</li>
                                                             </ul>
                                                         {% endif %}

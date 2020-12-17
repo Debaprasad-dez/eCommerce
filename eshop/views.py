@@ -8,8 +8,10 @@ def index(request):
     setting = Setting.objects.get(pk=1)
     category = Category.objects.all()
     product_slider = Product.objects.all().order_by('-id')[:4]
+    product_picked = Product.objects.all().filter(featured=True).order_by('-id')[:4]
+    product_featured = Product.objects.all().order_by('?')[:4]
     page = "home"
-    context = {'setting': setting, 'page': page, 'category': category, 'product_slider': product_slider}
+    context = {'setting': setting, 'page': page, 'category': category, 'product_slider': product_slider, 'product_picked':product_picked, 'product_featured':product_featured }
     return render(request, 'eshop/home.html', context)
 
 def aboutus(request):

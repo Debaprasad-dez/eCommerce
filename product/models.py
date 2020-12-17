@@ -59,6 +59,7 @@ class Product(models.Model):
     detail = RichTextUploadingField()
     status = models.CharField(max_length=20, choices=STATUS)
     slug = models.SlugField()
+    featured = models.BooleanField(default=False)
     create_at = models.DateField(auto_now_add=True)
     update_at = models.DateField(auto_now=True)
     
