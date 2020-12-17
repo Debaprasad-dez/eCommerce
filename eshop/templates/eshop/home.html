@@ -93,29 +93,29 @@
         <!--Loop starts here-->
         {% for item in product_trending %}
         <div class="col-6 mx-0 px-1 ">
-            <a href="/product/{{ item.id }}/{{ item.slug }}">
-                <div class="w-100 rounded">
-                    <img class="w-100 rounded" id="listimg"
-                        src="{{ item.image.url }}"
-                        alt="">
-                    <div class="px-2 pt-2 ">
-                        <div>
-                            <h5 class="my-0 py-0 text-success"><Strong>{{ item.brand_name }}</Strong></h5>
-                            <p class="w-100 text-dark small mb-0 pb-0">{{ item.title }}</p>
-                            <a class="md-small disabled text-dark h4 mr-1 mt-0 pt-0" href=""><strong> Rs.
-                                    {{ item.price }}</strong></a>
-                            <a class="small disabled text-dark mt-0 pt-0" href=""><strike>Rs. {{ item.prevprice }}</strike></a>
-                        </div>
-                        <a href="/addtocart/{{ item.id }}" class="my-2 w-md-100 text-light bg-dark p-2 px-4 mx-0 rounded"
-                            style="border: none">Add to cart</a>
-                        <button class="my-2 rounded-circle ml-1"
-                            style="border: none;height: 40px !important;width: 40px;background: red;"><i
-                                class="far fa-heart text-white"></i></button>
-                    </div>
+            <a href="">
+              <div class="w-100 rounded">
+                <img class="w-100 rounded" id="listimg"
+                  src="{{ item.image.url }}"
+                  alt="">
+                <div class="px-2 pt-2 ">
+                  <div>
+                    <h6 class="my-0 py-0 text-success"><Strong>{{ item.brand }}</Strong></h6>
+                    <p class="w-100 text-dark small mb-0 pb-0">{{ item.title }}</p>
+                    <a class="small disabled text-dark h4 mr-1 mt-0 pt-0" href="" style="font-weight: 700;">Rs. {{ item.price }}</a>
+                    <a class="small disabled text-dark mt-0 pt-0" href=""><strike>Rs. {{ item.prevprice}}</strike></a>
+                    <a class=" disabled text-dark mt-0 pt-0 ml-2" href="">3.4 <span
+                        class="fa fa-star text-warning"></span></a>
+                  </div>
+                  <a href="/product/{{ item.id }}/" class="my-2 w-md-100 text-light bg-dark p-1 px-3 mx-0 rounded" style="border: none">Add to cart</a>
+                  <button class="my-2 rounded-circle ml-1"
+                    style="border: none;height: 32px !important;width: 32px;background: red;object-fit: cover;object-position: center;"><i
+                      class="far fa-heart text-white"></i></button>
                 </div>
+              </div>
             </a>
             <br>
-        </div>
+          </div>
         {% endfor %}
         <!--Loop ends here-->
     </div>

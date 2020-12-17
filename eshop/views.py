@@ -7,7 +7,7 @@ from product.models import *
 def index(request):
     setting = Setting.objects.get(pk=1)
     category = Category.objects.all()
-    product_slider = Product.objects.all().order_by('-id')[:4]
+    product_slider = Product.objects.all().order_by('-id')[:10]
     product_picked = Product.objects.all().filter(featured=True).order_by('-id')[:4]
     product_trending = Product.objects.all().order_by('?')[:12]
     page = "home"

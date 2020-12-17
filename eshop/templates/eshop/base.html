@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -28,6 +29,7 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js">
     </script>
     <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 </head>
 <style>
     body {
@@ -66,14 +68,72 @@
             display: none !important;
         }
     }
+
+    #hideMe {
+        position: absolute;
+        z-index: 10000;
+        background: rgb(252, 252, 252);
+        width: 100%;
+        height: 100vh;
+        -moz-animation: cssAnimation 1s ease-in 6s forwards;
+        /* Firefox */
+        -webkit-animation: cssAnimation 1s ease-in 6s forwards;
+        /* Safari and Chrome */
+        -o-animation: cssAnimation 1s ease-in 6s forwards;
+        /* Opera */
+        animation: cssAnimation 1s ease-in 6s forwards;
+        -webkit-animation-fill-mode: forwards;
+        animation-fill-mode: forwards;
+
+    }
+
+    @keyframes cssAnimation {
+        to {
+            height: 0;
+            overflow: hidden;
+        }
+    }
+
+    @-webkit-keyframes cssAnimation {
+        to {
+            height: 0;
+            visibility: hidden;
+        }
+    }
 </style>
+<script>
+
+</script>
 
 <body>
-    <!--Navbar -->
+    <div id="hideMe">
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+
+        <br>
+        <div
+            class="container text-left px-3 animate__animated animate__fadeInUp animate__delay-1s animate__slow text-center">
+            {% if page %}
+            <h4 class="" style="font-weight: 500;">Welcome to</h4>
+            <br>
+            <br>
+            <img class="w-75" src="{% static 'images/buck.png' %}" alt="">
+            {% else %}
+            <h1 class="" style="font-weight: 500;">Stay with us for a moment.</h1>
+            {% endif %}
+        </div>
+    </div>
+    <!-- Navbar -->
     {% include 'eshop/nav.html' %}
     <!--/.Navbar -->
     {% block body %}
-    
+
     {% endblock %}
 </body>
 
