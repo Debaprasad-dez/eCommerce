@@ -18,7 +18,11 @@
         href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
         rel="stylesheet">
     <!-- JQuery -->
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- jQuery !-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"> </script>
+    <!-- jQuery UI !-->
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
     <!-- Bootstrap tooltips -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js">
     </script>
@@ -28,7 +32,9 @@
     <!-- MDB core JavaScript -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js">
     </script>
-    <title>Document</title>
+    <title> {% block title %}
+        {% endblock %} | Buckler</title>
+    <link rel="shortcut icon" href="{% static 'images/buck.png' %}" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 </head>
 <style>
@@ -53,13 +59,22 @@
         object-fit: cover;
         object-position: center;
     }
+    #productpageimg{
+        height: 600px;
+        object-fit: cover;
+        object-position: center;
+    }
 
     @media screen and (max-width: 992px) {
         #listimg {
             height: 240px;
 
         }
-
+        #productpageimg{
+            height: 400px;
+            object-fit: cover;
+            object-position: center;
+        }
         #peep {
             display: block;
         }
@@ -102,10 +117,10 @@
     }
 </style>
 <script>
-
 </script>
 
 <body>
+    {% if page %}
     <div id="hideMe">
         <br>
         <br>
@@ -115,26 +130,24 @@
         <br>
         <br>
         <br>
-
         <br>
         <div
             class="container text-left px-3 animate__animated animate__fadeInUp animate__delay-1s animate__slow text-center">
-            {% if page %}
             <h4 class="" style="font-weight: 500;">Welcome to</h4>
             <br>
             <br>
             <img class="w-75" src="{% static 'images/buck.png' %}" alt="">
-            {% else %}
-            <h1 class="" style="font-weight: 500;">Stay with us for a moment.</h1>
-            {% endif %}
         </div>
+        
     </div>
+    {% endif %}
     <!-- Navbar -->
     {% include 'eshop/nav.html' %}
     <!--/.Navbar -->
     {% block body %}
 
     {% endblock %}
+    {% include 'eshop/footer.html' %}
 </body>
 
 </html>

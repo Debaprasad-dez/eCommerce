@@ -1,5 +1,6 @@
   <!--Navbar -->
   {% load static %}
+  
   <nav class="mb-1 navbar navbar-expand-lg navbar-dark ">
       <div class="container">
           <a class="navbar-brand" href="/">
@@ -46,15 +47,33 @@
                   </div>
               </li>
           </ul>
+          <script>
+            $(function () {
+                $("#query").autocomplete({
+                    source: "/search_auto/",
+                    select: function (event, ui) { //item selected
+                        AutoCompleteSelectHandler(event, ui)
+                    },
+                    minLength: 2,
+                });
+            });
+      
+            function AutoCompleteSelectHandler(event, ui) {
+                var selectedObj = ui.item;
+            }
+        </script>
           <div class="w-50 px-5" id="peep2">
-              <input class="w-100 px-2" type="text"
-                  style="background-color: rgba(0, 128, 0, 0.13);border: none;height: 40px;border-radius: 10px;"
-                  placeholder="search">
+              <form action="/search/" method="POST"> {% csrf_token %}
+                  <input id="query" name="query" class="w-100 px-2" type="text"
+                      style="background-color: rgba(0, 128, 0, 0.13);border: none;height: 40px;border-radius: 10px;"
+                      placeholder="search">
+                  <button class="search-btn"><i class="fa fa-search"></i></button>
+              </form>
           </div>
           <button class="navbar-toggler mx-0" type="button" data-toggle="collapse"
               data-target="#navbarSupportedContent-333" aria-controls="navbarSupportedContent-333" aria-expanded="false"
               aria-label="Toggle navigation">
-              <a href="{% url 'contact' %}"><i class="fas fa-phone text-dark"></i></a>
+              <a href="tel:+917005198655"><i class="fas fa-phone text-dark"></i></a>
           </button>
           <button class="navbar-toggler mx-0" type="button" data-toggle="collapse"
               data-target="#navbarSupportedContent-333" aria-controls="navbarSupportedContent-333" aria-expanded="false"
@@ -76,9 +95,12 @@
               <div class="container text-center" id="peep">
                   <div class="w-100 text-center" style="height: auto;">
                       <br>
-                      <input class="w-100 px-2" type="text"
-                          style="background-color: rgba(0, 128, 0, 0.13);border: none;height: 40px;border-radius: 10px;"
-                          placeholder="search">
+                      <form action="/search/" method="POST"> {% csrf_token %}
+                          <input id="query" name="query" class="w-100 px-2" type="text"
+                              style="background-color: rgba(0, 128, 0, 0.13);border: none;height: 40px;border-radius: 10px;"
+                              placeholder="search">
+                          <button class="search-btn"><i class="fa fa-search"></i></button>
+                      </form>
                       <br>
                       <br>
                       <h3>Hi, Username</h3>
@@ -98,7 +120,7 @@
                   </div>
               </div>
           </div>
-          <a href="{% url 'contact' %}" class="mx-4" href="" id="peep2">
+          <a href="tel:+917005198655" class="mx-4" href="" id="peep2">
               <i class="fas fa-phone text-dark"></i>
           </a>
           <a class="mx-4" href="" id="peep2">

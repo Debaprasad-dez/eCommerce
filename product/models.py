@@ -4,6 +4,8 @@ from ckeditor_uploader.fields import RichTextUploadingField
 from mptt.fields import TreeForeignKey
 from mptt.models import MPTTModel
 from django.urls import reverse
+from django.contrib.auth.models import User
+from django.forms import ModelForm
 
 # Create your models here.
 
@@ -16,7 +18,7 @@ class Category(MPTTModel):
     parent = TreeForeignKey(
         'self', blank=True, null=True, related_name='children', on_delete=models.CASCADE)
     title = models.CharField(max_length=50)
-    keywords = models.CharField(max_length=255)
+    keywords = models.TextField()
     description = models.TextField()
     image = models.ImageField(upload_to='images/', blank=True)
     status = models.CharField(max_length=20, choices=STATUS)
@@ -51,7 +53,7 @@ class Product(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     brand_name = models.CharField(max_length=50)
     title = models.CharField(max_length=150)
-    keywords = models.CharField(max_length=255)
+    keywords = models.TextField()
     description = models.TextField()
     image = models.ImageField(upload_to='images/', blank=True)
     prevprice = models.FloatField()
@@ -74,6 +76,11 @@ class Product(models.Model):
     def image_tag(self):
         return mark_safe('<img_src="{}" height="50"/>'.format(self.image.url))
     
+    @property
+    def offer(self):
+        import math
+        return math.ceil(( ((self.prevprice - self.price)*100/self.prevprice) / 1000 ) * 1000)
+    
     image_tag.short_description = 'Image'
     
 class Images(models.Model):
@@ -84,3 +91,26 @@ class Images(models.Model):
     def __str__(self):
         return self.title
     
+class Review(models.Model):
+    STATUS = (
+        ('New', 'New'),
+        ('True', 'True'),
+        ('False', 'False'),
+    )
+    product=models.ForeignKey(Product,on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    # subject = models.CharField(max_length=50, blank=True)
+    # comment = models.CharField(max_length=250,blank=True)
+    rate = models.IntegerField(default=1)
+    ip = models.CharField(max_length=20, blank=True)
+    status=models.CharField(max_length=10,choices=STATUS, default='New')
+    create_at=models.DateTimeField(auto_now_add=True)
+    update_at=models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.product
+
+class ReviewForm(ModelForm):
+    class Meta:
+        model = Review
+        fields = ['rate']
