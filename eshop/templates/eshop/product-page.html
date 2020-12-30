@@ -35,19 +35,14 @@
 
             <p class="m-2"><strong>Rate this product</strong></p>
             <div class="row p-0 m-0">
-
                 <button type="submit" class="bg-light text-dark p-2 m-2 rounded border"><strong>1</strong> </button>
                 <button class="bg-light text-dark p-2 m-2 rounded border"><strong>2</strong> </button>
                 <button class="bg-light text-dark p-2 m-2 rounded border"><strong>3</strong> </button>
                 <button class="bg-light text-dark p-2 m-2 rounded border"><strong>4</strong> </button>
                 <button class="bg-light text-dark p-2 m-2 rounded border"><strong>5</strong> </button>
-
-
-
-
             </div>
             <br>
-            <form action="/order/addtoshopcart/{{ product.id }}" method="post">
+            <form action="/order/addtoshopcart/{{ product.id }}" method="post"> {% csrf_token %}
                 <b>Quantity: </b><input style="width: 10%;" class="input mx-1 text-center" name="quantity" type="number" value="1" min="1" max="{{ product.amount }}">
                 <div class="row p-0">
                     <div class="col-6">

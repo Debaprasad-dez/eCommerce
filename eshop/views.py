@@ -17,6 +17,7 @@ def index(request):
         featured=True).order_by('-id')[:4]
     product_trending = Product.objects.all().order_by('?')[:12]
     page = "home"
+    print(request.user.username)
     context = {'setting': setting, 'page': page, 'category': category, 'product_slider': product_slider, 'range': range(
         1, len(product_slider)), 'product_picked': product_picked, 'product_trending': product_trending}
     return render(request, 'eshop/home.html', context)

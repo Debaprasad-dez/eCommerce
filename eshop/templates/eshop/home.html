@@ -6,19 +6,18 @@
         <ol class="carousel-indicators">
             <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
             {% for i in range %}
-                <li data-target="#carouselExampleIndicators" data-slide-to="{{i}}"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="{{i}}"></li>
             {% endfor %}
         </ol>
         <div class="carousel-inner">
             {% for item in product_slider %}
             <div class="carousel-item {% if forloop.counter == 1 %} active {% endif %}">
-                <a href="">
-                    <img class="d-block w-100" style="border-radius: 10px !important;"
-                        src="{{ item.image.url }}"
+                <a href="/product/{{ item.id }}/{{ item.slug }}">
+                    <img class="d-block w-100" style="border-radius: 10px !important;" src="{{ item.image.url }}"
                         alt="First slide">
                 </a>
             </div>
-           {% endfor %}
+            {% endfor %}
         </div>
         <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -94,28 +93,29 @@
         {% for item in product_trending %}
         <div class="col-6 mx-0 px-1 ">
             <a href="/product/{{ item.id }}/{{ item.slug }}">
-              <div class="w-100 rounded">
-                <img class="w-100 rounded" id="listimg"
-                  src="{{ item.image.url }}"
-                  alt="">
-                <div class="px-2 pt-2 ">
-                  <div>
-                    <h6 class="my-0 py-0 text-success"><Strong>{{ item.brand }}</Strong></h6>
-                    <p class="w-100 text-dark small mb-0 pb-0">{{ item.title }}</p>
-                    <a class="small disabled text-dark h4 mr-1 mt-0 pt-0" href="" style="font-weight: 700;">Rs. {{ item.price }}</a>
-                    <a class="small disabled text-dark mt-0 pt-0" href=""><strike>Rs. {{ item.prevprice}}</strike></a>
-                    <a class=" disabled text-dark mt-0 pt-0 ml-2" href="">3.4 <span
-                        class="fa fa-star text-warning"></span></a>
-                  </div>
-                  <a href="/product/{{ item.id }}/" class="my-2 w-md-100 text-light bg-dark p-1 px-3 mx-0 rounded" style="border: none">Add to cart</a>
-                  <button class="my-2 rounded-circle ml-1"
-                    style="border: none;height: 32px !important;width: 32px;background: red;object-fit: cover;object-position: center;"><i
-                      class="far fa-heart text-white"></i></button>
+                <div class="w-100 rounded">
+                    <img class="w-100 rounded" id="listimg" src="{{ item.image.url }}" alt="">
+                    <div class="px-2 pt-2 ">
+                        <div>
+                            <h6 class="my-0 py-0 text-success"><Strong>{{ item.brand }}</Strong></h6>
+                            <p class="w-100 text-dark small mb-0 pb-0">{{ item.title }}</p>
+                            <a class="small disabled text-dark h4 mr-1 mt-0 pt-0" href="" style="font-weight: 700;">Rs.
+                                {{ item.price }}</a>
+                            <a class="small disabled text-dark mt-0 pt-0" href=""><strike>Rs.
+                                    {{ item.prevprice}}</strike></a>
+                            <a class=" disabled text-dark mt-0 pt-0 ml-2" href="">3.4 <span
+                                    class="fa fa-star text-warning"></span></a>
+                        </div>
+                        <a href="{% url 'addtoshopcart' item.id %}" class="my-2 w-md-100 text-light bg-dark p-1 px-3 mx-0 rounded"
+                            style="border: none">Add to cart</a>
+                        <button class="my-2 rounded-circle ml-1"
+                            style="border: none;height: 32px !important;width: 32px;background: red;object-fit: cover;object-position: center;"><i
+                                class="far fa-heart text-white"></i></button>
+                    </div>
                 </div>
-              </div>
             </a>
             <br>
-          </div>
+        </div>
         {% endfor %}
         <!--Loop ends here-->
     </div>

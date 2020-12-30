@@ -1,0 +1,44 @@
+{% extends 'user/base.html' %}
+{% load static %}
+{% block body %}
+<div class="container ">
+    <div class=" px-4 py-5" style="border-radius: 20px;background: rgba(1, 65, 1, 0.103);">
+
+        <div class="row">
+            <div class="col-6 text-center">
+                <button class="w-100 bg-dark border text-white py-2 rounded-pill">Register</button>
+            </div>
+            <div class="col-6 text-center">
+                <button class="w-100 border py-2 rounded-pill text-white"
+                    style="background: rgb(10, 160, 10);">Login</button>
+            </div>
+        </div>
+        <br>
+        <form method="POST" class="text-center"> {% csrf_token %}
+            <input class="w-100 py-2 border pl-3 rounded-pill my-2" name="username" type="text" placeholder="username">
+            <input class="w-100 py-2 border pl-3 rounded-pill my-2" name="password" type="password" placeholder="password">
+            <br>
+            <br>
+            <div class="col-11 mx-auto">
+                <button type="submit" class=" py-2 w-100 rounded-pill"
+                    style="border-radius: solid 2px black;background: white;">Proceed</button>
+            </div>
+        </form>
+        <br>
+        <br>
+        <div class="text-center">
+            <p>other options to log in</p>
+        </div>
+        <div class="row">
+            <div class="col-6 text-center">
+                <button class="w-100 border py-2 rounded-pill text-white"
+                    style="background: rgb(255, 0, 0);">Google</button>
+            </div>
+            <div class="col-6 text-center">
+                <button class="w-100  border text-white py-2 rounded-pill" style="background: blue;">Facebook</button>
+            </div>
+        </div>
+    </div>
+</div>
+<br><br>
+{% endblock %}

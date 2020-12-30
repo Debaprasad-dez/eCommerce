@@ -1,137 +1,181 @@
   <!--Navbar -->
+  {% block style %}
+  .ui-autocomplete{
+  margin-top: 100px !important;
+  }
+  {% endblock %}
+
   {% load static %}
-  
-  <nav class="mb-1 navbar navbar-expand-lg navbar-dark ">
-      <div class="container">
-          <a class="navbar-brand" href="/">
-              <img style="width: 100px;" src="{% static 'images/buck_logo.png' %}" alt="">
+  <script>
+    $(function () {
+      $("#query").autocomplete({
+        source: "/search_auto/",
+        select: function (event, ui) { //item selected
+          AutoCompleteSelectHandler(event, ui)
+        },
+        minLength: 2,
+      });
+    });
+
+    function AutoCompleteSelectHandler(event, ui) {
+      var selectedObj = ui.item;
+    }
+  </script>
+
+  <nav class="mb-1 navbar navbar-expand-lg navbar-dark fixed-top bg-white">
+    <div class="container">
+
+      <a class="navbar-brand" href="#">
+
+        <img style="width: 100px;" src="{% static 'images/buck_logo.png' %}" alt="">
+      </a>
+
+      <ul class="navbar-nav mr-auto">
+
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle bg- pl-0 py-0 " id="navbarDropdownMenuLink-333" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            <i class="fas fa-angle-down text-dark bg-light rounded-circle "></i>
           </a>
-          <ul class="navbar-nav mr-auto">
-              <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle bg- pl-0 py-0 " id="navbarDropdownMenuLink-333"
-                      data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      <i class="fas fa-angle-down text-dark bg-light rounded-circle "></i>
-                  </a>
-                  <div style="width: 300px !important;left: -100px !important;border: none;border-radius: 15px;box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.226);"
-                      class="dropdown-menu dropdown-default px-2" aria-labelledby="navbarDropdownMenuLink-333">
-                      <div class="container w-100 dropdown-item  px-auto text-center">
-                          <h5 class="mx-auto bg-success px-3 py-1 my-3 text-white"><strong>Founders</strong> </h5>
-                      </div>
-                      <div class="container w-100 dropdown-item mb-3">
-                          <div class="row w-100">
-                              <div class="col-3 px-0">
-                                  <img class="rounded-circle" style="height: 40px;width: 40px;"
-                                      src="https://images-eu.ssl-images-amazon.com/images/G/31/IMG19/Furniture/MSO/WFH_379x304._SY304_CB430182042_.jpg"
-                                      alt="">
-                              </div>
-                              <div class="col-9 px-0 mx-0">
-                                  <p class="w-100 p-0 m-0"><strong>Mousham Roy Choudhury </strong> </p>
-                                  <p class="small p-0 m-0">CEO</p>
-                              </div>
-                          </div>
-                          <br>
-                          <br>
-                          <div class="row w-100 ">
-                              <div class="col-3 px-0">
-                                  <img class="rounded-circle" style="height: 40px;width: 40px;"
-                                      src="https://images-eu.ssl-images-amazon.com/images/G/31/IMG19/Furniture/MSO/WFH_379x304._SY304_CB430182042_.jpg"
-                                      alt="">
-                              </div>
-                              <div class="col-9 px-0 mx-0">
-                                  <p class="w-100 p-0 m-0"><strong>Avijit Chandro</strong> </p>
-                                  <p class="small p-0 m-0">MD</p>
-                              </div>
-                          </div>
-                      </div>
-
-                  </div>
-              </li>
-          </ul>
-          <script>
-            $(function () {
-                $("#query").autocomplete({
-                    source: "/search_auto/",
-                    select: function (event, ui) { //item selected
-                        AutoCompleteSelectHandler(event, ui)
-                    },
-                    minLength: 2,
-                });
-            });
-      
-            function AutoCompleteSelectHandler(event, ui) {
-                var selectedObj = ui.item;
-            }
-        </script>
-          <div class="w-50 px-5" id="peep2">
-              <form action="/search/" method="POST"> {% csrf_token %}
-                  <input id="query" name="query" class="w-100 px-2" type="text"
-                      style="background-color: rgba(0, 128, 0, 0.13);border: none;height: 40px;border-radius: 10px;"
-                      placeholder="search">
-                  <button class="search-btn"><i class="fa fa-search"></i></button>
-              </form>
-          </div>
-          <button class="navbar-toggler mx-0" type="button" data-toggle="collapse"
-              data-target="#navbarSupportedContent-333" aria-controls="navbarSupportedContent-333" aria-expanded="false"
-              aria-label="Toggle navigation">
-              <a href="tel:+917005198655"><i class="fas fa-phone text-dark"></i></a>
-          </button>
-          <button class="navbar-toggler mx-0" type="button" data-toggle="collapse"
-              data-target="#navbarSupportedContent-333" aria-controls="navbarSupportedContent-333" aria-expanded="false"
-              aria-label="Toggle navigation">
-              <a href=""><i class="far fa-heart text-dark"></i></a>
-          </button>
-          <button class="navbar-toggler mx-0" type="button" data-toggle="collapse"
-              data-target="#navbarSupportedContent-333" aria-controls="navbarSupportedContent-333" aria-expanded="false"
-              aria-label="Toggle navigation">
-              <a href=""><i class="fas fa-shopping-bag text-dark "></i></a>
-          </button>
-          <button class="navbar-toggler mx-0 text-dark" type="button" data-toggle="collapse"
-              data-target="#navbarSupportedContent-333" aria-controls="navbarSupportedContent-333" aria-expanded="false"
-              aria-label="Toggle navigation">
-              <i class="fas fa-bars text-dark"></i>
-          </button>
-
-          <div class="collapse navbar-collapse" id="navbarSupportedContent-333">
-              <div class="container text-center" id="peep">
-                  <div class="w-100 text-center" style="height: auto;">
-                      <br>
-                      <form action="/search/" method="POST"> {% csrf_token %}
-                          <input id="query" name="query" class="w-100 px-2" type="text"
-                              style="background-color: rgba(0, 128, 0, 0.13);border: none;height: 40px;border-radius: 10px;"
-                              placeholder="search">
-                          <button class="search-btn"><i class="fa fa-search"></i></button>
-                      </form>
-                      <br>
-                      <br>
-                      <h3>Hi, Username</h3>
-                      <br>
-
-                      <a href="">
-                          <h4 class="mx-auto mb-3 bg-light py-3 rounded text-dark" style="font-weight: 500;">My orders
-                          </h4>
-                      </a>
-                      <br>
-                      <a href="">
-                          <h4 class="mx-auto mb-3 bg-dark py-3 rounded text-white" style="font-weight: 500;">Sell with
-                              Us</h4>
-                      </a>
-                      <p>Buckler inc.</p>
-
-                  </div>
+          <div
+            style="width: 300px !important;left: -100px !important;border: none;border-radius: 15px;box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.226);"
+            class="dropdown-menu dropdown-default px-2" aria-labelledby="navbarDropdownMenuLink-333">
+            <div class="container w-100 dropdown-item  px-auto text-center">
+              <h5 class="mx-auto bg-success px-3 py-1 my-3 text-white"><strong>Founders</strong> </h5>
+            </div>
+            <div class="container w-100 dropdown-item mb-3">
+              <div class="row w-100">
+                <div class="col-3 px-0">
+                  <img class="rounded-circle" style="height: 40px;width: 40px;"
+                    src="https://images-eu.ssl-images-amazon.com/images/G/31/IMG19/Furniture/MSO/WFH_379x304._SY304_CB430182042_.jpg"
+                    alt="">
+                </div>
+                <div class="col-9 px-0 mx-0">
+                  <p class="w-100 p-0 m-0"><strong>Mousham Roy Choudhury </strong> </p>
+                  <p class="small p-0 m-0">CEO</p>
+                </div>
               </div>
+              <br>
+              <br>
+              <div class="row w-100 ">
+                <div class="col-3 px-0">
+                  <img class="rounded-circle" style="height: 40px;width: 40px;"
+                    src="https://images-eu.ssl-images-amazon.com/images/G/31/IMG19/Furniture/MSO/WFH_379x304._SY304_CB430182042_.jpg"
+                    alt="">
+                </div>
+                <div class="col-9 px-0 mx-0">
+                  <p class="w-100 p-0 m-0"><strong>Avijit Chandro</strong> </p>
+                  <p class="small p-0 m-0">MD</p>
+                </div>
+              </div>
+            </div>
+
           </div>
-          <a href="tel:+917005198655" class="mx-4" href="" id="peep2">
-              <i class="fas fa-phone text-dark"></i>
-          </a>
-          <a class="mx-4" href="" id="peep2">
-              <i class="far fa-heart text-dark"></i>
-          </a>
-          <a class="mx-4" href="" id="peep2">
-              <i class="fas fa-shopping-bag text-dark"></i>
-          </a>
-          <a class="mx-4 text-dark" style="font-weight: 600;" href="" id="peep2">
-              My Orders
-          </a>
+        </li>
+      </ul>
+
+      <div class=" px-5 row w-100" id="peep2">
+        <form action="/search/" method="POST"> {% csrf_token %}
+          <input id="query" name="query" class=" px-2" type="text"
+            style="background-color: rgba(0, 128, 0, 0.13);border: none;height: 40px;border-radius: 10px;"
+            placeholder="search">
+          <button style="border: none;" class="col-2my-3 bg-primary text-white px-4 py-2 rounded-pill"
+            type="submit">Search</button>
+        </form>
+
       </div>
+      <button class="navbar-toggler mx-0" type="button" 
+        aria-controls="navbarSupportedContent-333" aria-expanded="false" aria-label="Toggle navigation">
+        <a href="tel:+919612244591"><i class="fas fa-phone text-dark"></i></a>
+      </button>
+      {% if user.id is not None %}
+      <button class="navbar-toggler mx-0" type="button" 
+        aria-controls="navbarSupportedContent-333" aria-expanded="false" aria-label="Toggle navigation">
+        <a href="#"><i class="far fa-heart text-dark"></i></a>
+      </button>
+      <button class="navbar-toggler mx-0" type="button" 
+        aria-controls="navbarSupportedContent-333" aria-expanded="false" aria-label="Toggle navigation">
+        <a href="#"><i class="fas fa-shopping-bag text-dark "></i></a>
+      </button>
+      <button class="navbar-toggler mx-0 text-dark" type="button" data-toggle="collapse"
+        data-target="#navbarSupportedContent-333" aria-controls="navbarSupportedContent-333" aria-expanded="false"
+        aria-label="Toggle navigation">
+        <i class="fas fa-bars text-dark"></i>
+      </button>
+      {% else %}
+      <button class="navbar-toggler mx-0" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-333"
+        aria-controls="navbarSupportedContent-333" aria-expanded="false" aria-label="Toggle navigation">
+        <a href="{% url 'login_form' %}"><i class="text-dark fa fa-sign-in-alt"></i></a>
+      </button>
+      <button class="navbar-toggler mx-0" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-333"
+        aria-controls="navbarSupportedContent-333" aria-expanded="false" aria-label="Toggle navigation">
+        <a href="{% url 'signup_form' %}"><i class="text-dark fa fa-registered" aria-hidden="true"></i></a>
+      </button>
+      {% endif %}
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent-333">
+        <div class="container text-center" id="peep">
+          <div class="w-100 text-center" style="height: auto;">
+            <br>
+            <form action="/search/" method="POST"> {% csrf_token %}
+              <input id="query" name="query" class="w-100 px-2" type="text"
+                style="background-color: rgba(0, 128, 0, 0.13);border: none;height: 40px;border-radius: 10px;"
+                placeholder="search">
+              <button style="border: none;" class="my-3 bg-primary text-white px-4 py-2 rounded-pill"
+                type="submit">Search</button>
+            </form>
+            <br>
+            <br>
+            {% if user.id is not None %}
+            <h3>Hi, {{ user.username }}</h3>
+            <br>
+            <p class="py-0 my-0"><span><i class="fas fa-envelope text-dark"></i></span> {{ user.email }}</p>
+            <!-- <p class="py-1 my-0"><i class="fas fa-phone text-dark"></i><strong> 7005657875</strong></p> -->
+            <br>
+            <a href="#">
+              <h4 class="mx-auto mb-3 bg-light py-3 rounded text-dark" style="font-weight: 500;">My orders</h4>
+            </a>
+            <br>
+            <a href="{% url 'contact' %}">
+              <h4 class="mx-auto mb-3 bg-dark py-3 rounded text-white" style="font-weight: 500;">Sell with Us</h4>
+            </a>
+            <br>
+            <a href="{% url 'logout_func' %}">
+              <h4 class="mx-auto mb-3 bg-light py-3 rounded text-dark" style="font-weight: 500;">Log-out</h4>
+            </a>
+            {% endif %}
+            <p>Buckler inc.</p>
+
+          </div>
+        </div>
+      </div>
+      <a class="mx-4" href="tel:+919612244591" id="peep2">
+        <i class="fas fa-phone text-dark"></i>
+      </a>
+      {% if user.id is not None %}
+      <a class="mx-4" href="" id="peep2">
+        <i class="far fa-heart text-dark"></i>
+      </a>
+      <a class="mx-4" href="" id="peep2">
+        <i class="fas fa-shopping-bag text-dark"></i>
+      </a>
+      <a class="mx-4 text-dark w-25" style="font-weight: 600;" href="#" id="peep2">
+        My Orders
+      </a>
+      <a class="mx-4 text-dark w-25" style="font-weight: 600;" href="{% url 'logout_func' %}" id="peep2">
+        Log out
+      </a>
+      {% else %}
+      <a class="mx-4 text-dark w-25" style="font-weight: 600;" href="{% url 'login_form' %}" id="peep2">
+        Login
+      </a>
+      <a class="mx-4 text-dark w-25" style="font-weight: 600;" href="{% url 'signup_form' %}" id="peep2">
+        Register
+      </a> 
+      {% endif %}
+    </div>
   </nav>
+
   <!--/.Navbar -->
+  <br><br><br>
