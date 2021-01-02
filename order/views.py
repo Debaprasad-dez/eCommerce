@@ -10,7 +10,8 @@ from .Paytm import Checksum
 from django.views.decorators.csrf import csrf_exempt
 
 
-MERCHANT_KEY = 'wZsNCn12222184239392'
+MERCHANT_KEY = '7RMI_B8Qxc43LG2S'
+# 7RMI_B8Qxc43LG2S
 # Create your views here.
 
 
@@ -137,12 +138,14 @@ def orderproduct(request):
                 product.save()
 
                 # ************ <> *****************
+            ShopCart.objects.filter(user_id=current_user.id).delete() # Clear & Delete shopcart
+            request.session['cart_items']=0
             amount = int(total)
 
         # return render(request, 'shop/checkout.html', {'thank':thank, 'id': id})
         # Request paytm to transfer the amount to your account after payment by user
             param_dict = {
-                'MID': '7RMI_B8Qxc43LG2S',                
+                'MID': 'wZsNCn12222184239392',                
                 'ORDER_ID': str(ordercode),
                 'TXN_AMOUNT': str(amount),
                 'CUST_ID': request.user.email,
@@ -154,12 +157,9 @@ def orderproduct(request):
             }
             param_dict['CHECKSUMHASH'] = Checksum.generate_checksum(
                 param_dict, MERCHANT_KEY)
-            return render(request, 'shop/paytm.html', {'param_dict': param_dict})
+            return render(request, 'order/paytm.html', {'param_dict': param_dict})
             # Clear & Delete shopcart
-            ShopCart.objects.filter(user_id=current_user.id).delete()
-            request.session['cart_items'] = 0
-            messages.success(
-                request, "Your Order has been completed. Thank you ")
+            
             return render(request, 'order/order_completed.html', {'ordercode': ordercode, 'category': category})
         else:
             messages.warning(request, form.errors)
@@ -179,6 +179,7 @@ def orderproduct(request):
 def handlerequest(request):
     # paytm will send you post request here
     form = request.POST
+    # print(form)
     response_dict = {}
     for i in form.keys():
         response_dict[i] = form[i]
@@ -188,7 +189,14 @@ def handlerequest(request):
     verify = Checksum.verify_checksum(response_dict, MERCHANT_KEY, checksum)
     if verify:
         if response_dict['RESPCODE'] == '01':
+            ShopCart.objects.filter(user_id=request.user.id).delete()
+            request.session['cart_items'] = 0
+            order = Order.objects.get(code = form['ORDERID'])
+            order.paid = True
+            order.save()
+            messages.success(
+                request, "Your Order has been completed. Thank you ")
             print('order successful')
         else:
             print('order was not successful because' + response_dict['RESPMSG'])
-    return render(request, 'shop/paymentstatus.html', {'response': response_dict})
+    return render(request, 'order/paymentstatus.html', {'response': response_dict})
