@@ -12,6 +12,7 @@ from django.utils.encoding import force_bytes, force_text
 from .tokens import account_activation_token
 from .forms import *
 from .models import *
+from product.models import *
 
 # Create your views here.
 
