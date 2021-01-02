@@ -25,7 +25,7 @@
   <nav class="mb-1 navbar navbar-expand-lg navbar-dark fixed-top bg-white">
     <div class="container">
 
-      <a class="navbar-brand" href="#">
+      <a class="navbar-brand" href="/">
 
         <img style="width: 100px;" src="{% static 'images/buck_logo.png' %}" alt="">
       </a>
@@ -96,7 +96,7 @@
       </button>
       <button class="navbar-toggler mx-0" type="button" 
         aria-controls="navbarSupportedContent-333" aria-expanded="false" aria-label="Toggle navigation">
-        <a href="#"><i class="fas fa-shopping-bag text-dark "></i></a>
+        <a href="{% url 'shopcart' %}"><i class="fas fa-shopping-bag text-dark "></i></a>
       </button>
       <button class="navbar-toggler mx-0 text-dark" type="button" data-toggle="collapse"
         data-target="#navbarSupportedContent-333" aria-controls="navbarSupportedContent-333" aria-expanded="false"
@@ -157,7 +157,7 @@
       <a class="mx-4" href="" id="peep2">
         <i class="far fa-heart text-dark"></i>
       </a>
-      <a class="mx-4" href="" id="peep2">
+      <a class="mx-4" href="{% url 'shopcart' %}" id="peep2">
         <i class="fas fa-shopping-bag text-dark"></i>
       </a>
       <a class="mx-4 text-dark w-25" style="font-weight: 600;" href="#" id="peep2">
