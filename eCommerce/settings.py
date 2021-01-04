@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'order',
     'user',
     'mptt',
+    'paywix',
 ]
 
 MIDDLEWARE = [
@@ -152,3 +153,11 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'expresstotell@gmail.com'
 EMAIL_HOST_PASSWORD = 'fovmubzevnkthbhr'
+
+PAYU_CONFIG = {
+    "merchant_key": "g4MAEe9G",
+    "merchant_salt": "XZEbwGu5lz",
+    "mode": "test",
+    "success_url": "http://127.0.0.1:8000/order/success",
+    "failure_url": "http://127.0.0.1:8000/order/failure"
+}

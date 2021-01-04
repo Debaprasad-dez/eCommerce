@@ -41,11 +41,14 @@ class Order(models.Model):
     )
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     code = models.CharField(max_length=5, editable=False )
+    key = models.CharField(max_length=5, editable=False, null=True, blank=True )
     first_name = models.CharField(max_length=10)
     last_name = models.CharField(max_length=10)
     phone = models.CharField(blank=True, max_length=20)
     address = models.CharField(blank=True, max_length=150)
     city = models.CharField(blank=True, max_length=20)
+    state = models.CharField(blank=True, max_length=20)
+    ZIP = models.CharField(blank=True, max_length=20)
     country = models.CharField(blank=True, max_length=20)
     total = models.FloatField()
     status=models.CharField(max_length=10,choices=STATUS,default='New')
@@ -61,7 +64,7 @@ class Order(models.Model):
 class OrderForm(ModelForm):
     class Meta:
         model = Order
-        fields = ['first_name','last_name','address','phone','city','country']
+        fields = ['first_name','last_name','address','phone','city', 'state', 'ZIP', 'country']
 
 class OrderProduct(models.Model):
     STATUS = (

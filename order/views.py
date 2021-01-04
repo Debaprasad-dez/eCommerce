@@ -1,22 +1,41 @@
 from product.models import *
 from order.models import *
-from django.http.response import HttpResponseRedirect
+from django.http.response import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, HttpResponse
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from user.forms import *
 from django.utils.crypto import get_random_string
-from .Paytm import Checksum
+from django.conf import settings
+from paywix.payu import Payu
 from django.views.decorators.csrf import csrf_exempt
 
 
 MERCHANT_KEY = '7RMI_B8Qxc43LG2S'
-# 7RMI_B8Qxc43LG2S
-# Create your views here.
+payu_config = settings.PAYU_CONFIG
+merchant_key = payu_config.get('merchant_key')
+merchant_salt = payu_config.get('merchant_salt')
+surl = payu_config.get('success_url')
+furl = payu_config.get('failure_url')
+mode = payu_config.get('mode')
+payu = Payu(merchant_key, merchant_salt, surl, furl, mode)
 
 
-def index(request):
-    return HttpResponse("Hello Order")
+# def payu_demo(request):
+#     data = {'amount': '10',
+#             'firstname': 'renjith',
+#             'email': 'renjithsraj@gmail.com',
+#             'phone': '9746272610', 'productinfo': 'test',
+#             'lastname': 'test', 'address1': 'test',
+#             'address2': 'test', 'city': 'test',
+#             'state': 'test', 'country': 'test',
+#             'zipcode': 'tes', 'udf1': '',
+#             'udf2': '', 'udf3': '', 'udf4': '', 'udf5': ''
+#             }
+#     txnid = "alpharomeo"
+#     data.update({"txnid": txnid})
+#     payu_data = payu.transaction(**data)
+#     return render(request, 'order/payu_checkout.html', {"posted": payu_data})
 
 
 @login_required(login_url='/user/login')
@@ -103,27 +122,61 @@ def orderproduct(request):
         form = OrderForm(request.POST)
         # return HttpResponse(request.POST.items())
         if form.is_valid():
-            # Send Credit card to bank,  If the bank responds ok, continue, if not, show the error
-            # ..............
-
-            data = Order()
-            # get product quantity from form
-            data.first_name = form.cleaned_data['first_name']
-            data.last_name = form.cleaned_data['last_name']
-            data.address = form.cleaned_data['address']
-            data.city = form.cleaned_data['city']
-            data.country = form.cleaned_data['country']
-            data.phone = form.cleaned_data['phone']
-            data.user_id = current_user.id
-            data.total = total
-            data.ip = request.META.get('REMOTE_ADDR')
+            order = Order()
+            order.key = request.user.id
+            order.first_name = form.cleaned_data['first_name']
+            order.last_name = form.cleaned_data['last_name']
+            order.address = form.cleaned_data['address']
+            order.city = form.cleaned_data['city']
+            order.state = form.cleaned_data['state']
+            order.ZIP = form.cleaned_data['ZIP']
+            order.country = form.cleaned_data['country']
+            order.phone = form.cleaned_data['phone']
+            order.user_id = current_user.id
+            order.total = total
+            order.ip = request.META.get('REMOTE_ADDR')
             ordercode = get_random_string(5).upper()  # random cod
-            data.code = ordercode
-            data.save()
-
+            order.code = ordercode
+            order.save()
+            
+            # data = { 'amount': str(order.total), 
+            # 'firstname': order.first_name, 
+            # 'email': request.user.email,
+            # 'phone': order.phone, 'productinfo': 'test', 
+            # 'lastname': order.last_name, 'address1': order.address, 
+            # 'address2': str(order.key), 'city': order.city, 
+            # 'state': str(order.state), 'country': order.country, 
+            # 'zipcode': str(order.ZIP), 'udf1': '', 
+            # 'udf2': '', 'udf3': '', 'udf4': '', 'udf5': '',
+            # }
+            
+            data = { 'amount': str(order.total), 
+            'firstname': order.first_name, 
+            'email': request.user.email,
+            'phone': order.phone, 'productinfo': 'test', 
+            'lastname': 'test', 'address1': 'test', 
+            'address2': order.key, 'city': 'test', 
+            'state': 'test', 'country': 'test', 
+            'zipcode': 'tes', 'udf1': '', 
+            'udf2': '', 'udf3': '', 'udf4': '', 'udf5': ''
+        }
+            
+            # data = {'amount': str(order.total),
+            # 'firstname': order.first_name,
+            # 'email': request.user.email,
+            # 'phone': order.phone, 'productinfo': 'Our product',
+            # 'lastname': order.last_name, 'address1': order.address,
+            # 'address2': order.address, 'city': order.city,
+            # 'state': order.state, 'country': order.country,
+            # 'zipcode': order.ZIP, 'udf1': '',
+            # 'udf2': '', 'udf3': '', 'udf4': '', 'udf5': ''
+            # }
+            txnid = ordercode
+            data.update({"txnid": txnid})
+            payu_data = payu.transaction(**data)
             for rs in shopcart:
                 detail = OrderProduct()
-                detail.order_id = data.id  # Order Id
+                detail.order_id = order.id  # Order Id
                 detail.product_id = rs.product_id
                 detail.user_id = current_user.id
                 detail.quantity = rs.quantity
@@ -138,33 +191,12 @@ def orderproduct(request):
                 product.save()
 
                 # ************ <> *****************
-            ShopCart.objects.filter(user_id=current_user.id).delete() # Clear & Delete shopcart
-            request.session['cart_items']=0
-            amount = int(total)
-
-        # return render(request, 'shop/checkout.html', {'thank':thank, 'id': id})
-        # Request paytm to transfer the amount to your account after payment by user
-            param_dict = {
-                'MID': 'wZsNCn12222184239392',                
-                'ORDER_ID': str(ordercode),
-                'TXN_AMOUNT': str(amount),
-                'CUST_ID': request.user.email,
-                'INDUSTRY_TYPE_ID': 'Retail',
-                'WEBSITE': 'WEBSTAGING',
-                'CHANNEL_ID': 'WEB',
-                'CALLBACK_URL': 'http://127.0.0.1:8000/order/handlerequest/',
-
-            }
-            param_dict['CHECKSUMHASH'] = Checksum.generate_checksum(
-                param_dict, MERCHANT_KEY)
-            return render(request, 'order/paytm.html', {'param_dict': param_dict})
             # Clear & Delete shopcart
-            
-            return render(request, 'order/order_completed.html', {'ordercode': ordercode, 'category': category})
+
+            return render(request, 'order/payu_checkout.html', {"posted": payu_data})
         else:
             messages.warning(request, form.errors)
             return HttpResponseRedirect("/order/orderproduct")
-
     form = OrderForm()
     profile = UserProfile.objects.filter(user_id=current_user.id)
     context = {'shopcart': shopcart,
@@ -175,28 +207,26 @@ def orderproduct(request):
                }
     return render(request, 'order/order_form.html', context)
 
-@csrf_exempt
-def handlerequest(request):
-    # paytm will send you post request here
-    form = request.POST
-    # print(form)
-    response_dict = {}
-    for i in form.keys():
-        response_dict[i] = form[i]
-        if i == 'CHECKSUMHASH':
-            checksum = form[i]
 
-    verify = Checksum.verify_checksum(response_dict, MERCHANT_KEY, checksum)
-    if verify:
-        if response_dict['RESPCODE'] == '01':
-            ShopCart.objects.filter(user_id=request.user.id).delete()
-            request.session['cart_items'] = 0
-            order = Order.objects.get(code = form['ORDERID'])
-            order.paid = True
-            order.save()
-            messages.success(
-                request, "Your Order has been completed. Thank you ")
-            print('order successful')
-        else:
-            print('order was not successful because' + response_dict['RESPMSG'])
-    return render(request, 'order/paymentstatus.html', {'response': response_dict})
+@csrf_exempt
+def payu_success(request):
+    print("success")
+    data = {k: v[0] for k, v in dict(request.POST).items()}
+    response = payu.verify_transaction(data)
+    # print("Request:")
+    # print(request.POST)
+    # print("DATA: ")
+    # print(data["txnid"])
+    ShopCart.objects.filter(user_id=data["address2"]).delete()
+    request.session['cart_items'] = 0
+    order = Order.objects.get(code = data["txnid"])
+    order.paid = True
+    order.save()
+    return render(request, 'order/order_completed.html', {"ordercode": data["txnid"]})
+
+@csrf_exempt
+def payu_failure(request):
+    print("failure")
+    data = {k: v[0] for k, v in dict(request.POST).items()}
+    response = payu.verify_transaction(data)
+    return render(request, 'order/order_failed.html', {"ordercode": data["txnid"]})
