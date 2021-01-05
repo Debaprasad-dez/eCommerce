@@ -1,3 +1,4 @@
+from django.http.response import HttpResponse
 from django.shortcuts import render, HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib import messages
@@ -12,6 +13,7 @@ from django.utils.encoding import force_bytes, force_text
 from .tokens import account_activation_token
 from .forms import *
 from .models import *
+from order.models import *
 from product.models import *
 
 # Create your views here.
@@ -169,3 +171,49 @@ def user_password(request):
         form = PasswordChangeForm(request.user)
         return render(request, 'user_password.html', {'form': form,  # 'category': category
                                                       })
+
+@login_required(login_url='/login') # Check login
+def user_orders(request):
+    #category = Category.objects.all()
+    current_user = request.user
+    orders=Order.objects.filter(user_id=current_user.id)
+    context = {#'category': category,
+               'orders': orders,
+               }
+    return render(request, 'user/user_orders.html', context)
+
+@login_required(login_url='/login') # Check login
+def user_orderdetail(request,id):
+    #category = Category.objects.all()
+    current_user = request.user
+    order = Order.objects.get(user_id=current_user.id, id=id)
+    orderitems = OrderProduct.objects.filter(order_id=id)
+    context = {
+        #'category': category,
+        'order': order,
+        'orderitems': orderitems,
+    }
+    return render(request, 'user/user_order_details.html', context)
+
+@login_required(login_url='/login') # Check login
+def user_order_product(request):
+    #category = Category.objects.all()
+    current_user = request.user
+    order_product = OrderProduct.objects.filter(user_id=current_user.id).order_by('-id')
+    context = {#'category': category,
+               'order_product': order_product,
+               }
+    return render(request, 'user/user_order_products.html', context)
+
+@login_required(login_url='/login') # Check login
+def user_order_product_detail(request,id,oid):
+    #category = Category.objects.all()
+    current_user = request.user
+    order = Order.objects.get(user_id=current_user.id, id=oid)
+    orderitems = OrderProduct.objects.filter(id=id,user_id=current_user.id)
+    context = {
+        #'category': category,
+        'order': order,
+        'orderitems': orderitems,
+    }
+    return render(request, 'user/user_order_detail.html', context)

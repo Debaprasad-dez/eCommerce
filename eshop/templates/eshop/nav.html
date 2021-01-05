@@ -133,7 +133,7 @@
             <p class="py-0 my-0"><span><i class="fas fa-envelope text-dark"></i></span> {{ user.email }}</p>
             <!-- <p class="py-1 my-0"><i class="fas fa-phone text-dark"></i><strong> 7005657875</strong></p> -->
             <br>
-            <a href="#">
+            <a href="{% url 'user_orders' %}">
               <h4 class="mx-auto mb-3 bg-light py-3 rounded text-dark" style="font-weight: 500;">My orders</h4>
             </a>
             <br>
@@ -160,7 +160,7 @@
       <a class="mx-4" href="{% url 'shopcart' %}" id="peep2">
         <i class="fas fa-shopping-bag text-dark"></i>
       </a>
-      <a class="mx-4 text-dark w-25" style="font-weight: 600;" href="#" id="peep2">
+      <a class="mx-4 text-dark w-25" style="font-weight: 600;" href="{% url 'user_orders' %}" id="peep2">
         My Orders
       </a>
       <a class="mx-4 text-dark w-25" style="font-weight: 600;" href="{% url 'logout_func' %}" id="peep2">
