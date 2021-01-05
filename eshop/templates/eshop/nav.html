@@ -92,7 +92,7 @@
       {% if user.id is not None %}
       <button class="navbar-toggler mx-0" type="button" 
         aria-controls="navbarSupportedContent-333" aria-expanded="false" aria-label="Toggle navigation">
-        <a href="#"><i class="far fa-heart text-dark"></i></a>
+        <a href="{% url 'wishlist' %}"><i class="far fa-heart text-dark"></i></a>
       </button>
       <button class="navbar-toggler mx-0" type="button" 
         aria-controls="navbarSupportedContent-333" aria-expanded="false" aria-label="Toggle navigation">
@@ -154,7 +154,7 @@
         <i class="fas fa-phone text-dark"></i>
       </a>
       {% if user.id is not None %}
-      <a class="mx-4" href="" id="peep2">
+      <a class="mx-4" href="{% url 'wishlist' %}" id="peep2">
         <i class="far fa-heart text-dark"></i>
       </a>
       <a class="mx-4" href="{% url 'shopcart' %}" id="peep2">

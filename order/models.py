@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
+from django.db.models import fields
 from django.db.models.expressions import F
 
 # Create your models here.
@@ -29,6 +30,25 @@ class ShopCartForm(ModelForm):
     class Meta:
         model = ShopCart
         fields = ['quantity']
+
+class WishList(models.Model):
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True)
+    # variant = models.ForeignKey(Variants, on_delete=models.SET_NULL,blank=True, null=True) # relation with varinat
+    quantity = models.IntegerField()
+
+    def __str__(self):
+        return self.product.title
+    
+    @property
+    def price(self):
+        return (self.product.price)
+
+
+class WishListForm(ModelForm):
+    class Meta:
+        model = WishList
+        fields= ['quantity']
 
 class Order(models.Model):
     STATUS = (
