@@ -109,8 +109,9 @@ Home
                             <a class=" disabled text-dark mt-0 pt-0 ml-2" href="">3.4 <span
                                     class="fa fa-star text-warning"></span></a>
                         </div>
-                        <a href="{% url 'addtoshopcart' item.id %}" class="my-2 w-md-100 text-light bg-dark p-1 px-3 mx-0 rounded"
-                            style="border: none">Add to cart</a>
+                        <a href="{% url 'addtoshopcart' item.id %}"
+                            class="my-2 w-md-100 text-light bg-dark p-1 px-3 mx-0 rounded" style="border: none">Add to
+                            cart</a>
                         <a href="{% url 'addtowishlist' item.id %}" class="my-2 rounded-circle ml-1"
                             style="border: none;height: 32px !important;width: 32px;background: red;object-fit: cover;object-position: center;"><i
                                 class="far fa-heart text-white"></i></a>
@@ -124,4 +125,22 @@ Home
     </div>
 </div>
 
+<!-- {{ men.title }} <br>
+{% for item in child %}
+    {{ item.title }}
+{% endfor %} -->
+
+<!-- {% load mptt_tags %}
+<ul>
+    {% recursetree category %}
+        <li>
+            {{ node.title }}
+            {% if not node.is_leaf_node %}
+                <ul class="children">
+                    {{ children }}
+                </ul>
+            {% endif %}
+        </li>
+    {% endrecursetree %}
+</ul> -->
 {% endblock %}

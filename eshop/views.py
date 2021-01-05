@@ -12,6 +12,8 @@ from .forms import *
 def index(request):
     setting = Setting.objects.get(pk=1)
     category = Category.objects.all()
+    # men = Category.objects.get(title = 'Men')
+    # child = men.get_children()
     product_slider = Product.objects.all().order_by('-id')[:10]
     product_picked = Product.objects.all().filter(
         featured=True).order_by('-id')[:4]
@@ -19,7 +21,8 @@ def index(request):
     page = "home"
     print(request.user.username)
     context = {'setting': setting, 'page': page, 'category': category, 'product_slider': product_slider, 'range': range(
-        1, len(product_slider)), 'product_picked': product_picked, 'product_trending': product_trending}
+        1, len(product_slider)), 'product_picked': product_picked, 'product_trending': product_trending, # 'men': men, 'child': child
+               }
     return render(request, 'eshop/home.html', context)
 
 
