@@ -1,56 +1,36 @@
 {% extends 'eshop/base.html' %}
 {% load static %}
 {% block body %}
-<Form action="" method="post">
-    {% csrf_token %}
+<div class="container">
+    <h4 style="font-weight: 600;">Your address</h4>
     <div class="col-md-6">
-        <div class="billing-details">
+        <div class="row">
+          <form method="POST" action=""> {% csrf_token %}
+              <label for="first_name">First Name:</label>
+              <input id="first_name" name="first_name" class=" w-100 px-2 mx-0 my-1" type="text" style="background-color: rgba(0, 128, 0, 0.13);border: none;height: 40px;border-radius: 10px;" placeholder="First Name">
+              <label for="last_name">Last Name:</label>
+              <input id="last_name" name="last_name" class=" w-100 px-2 mx-0 my-1" type="text" style="background-color: rgba(0, 128, 0, 0.13);border: none;height: 40px;border-radius: 10px;" placeholder="Last Name">
+              <label for="phone">Phone:</label>
+              <input id="phone" name="phone" class=" w-100 px-2 mx-0 my-1" type="tel" style="background-color: rgba(0, 128, 0, 0.13);border: none;height: 40px;border-radius: 10px;" placeholder="Phone Number (+91)">
+              <label for="address">Address Line:</label>
+              <input id="address" name="address" class=" w-100 px-2 mx-0 my-1" type="text" style="background-color: rgba(0, 128, 0, 0.13);border: none;height: 100px;border-radius: 10px;" placeholder="Address Line">
+              <label for="ZIP">ZIP:</label>
+              <input id="ZIP" name="ZIP" class=" w-20 px-2 mx-0 my-1" type="text" style="background-color: rgba(0, 128, 0, 0.13);border: none;height: 40px;border-radius: 10px;" placeholder="PIN Code">
+              <label for="city">City:</label>
+              <input id="city" name="city" class=" w-20 px-2 mx-0 my-1" type="text" style="background-color: rgba(0, 128, 0, 0.13);border: none;height: 40px;border-radius: 10px;" placeholder="City">
+              <label for="state">State:</label>
+              <input id="state" name="state" class=" w-20 px-2 mx-0 my-1" type="text" style="background-color: rgba(0, 128, 0, 0.13);border: none;height: 40px;border-radius: 10px;" placeholder="State">
+              <label for="country">Country:</label>
+              <input id="country" name="country" class=" w-20 px-2 mx-0 my-1" type="text" style="background-color: rgba(0, 128, 0, 0.13);border: none;height: 40px;border-radius: 10px;" placeholder="Country">
+              <br>
+              Total payable amount <i class="fas fa-rupee-sign    "></i> {{ total }}
+              <br>
+              <input class="bg-dark border py-2 px-3 mx-0 my-1 text-white rounded" value="Proceed to pay" type="submit" placeholder="">
+          </form>
+      </div>
 
-            <div class="section-title">
-                <h4 class="title">Shipping Details</h4>
-            </div>
-            <p><label for="id_first_name">First name:</label>
-                <input type="text" name="first_name" value="{{ user.first_name }}" class="input" maxlength="10" required
-                    id="id_first_name"></p>
-            <p><label for="id_last_name">Last name:</label>
-                <input type="text" name="last_name" value="{{ user.last_name }}" class="input" maxlength="10" required
-                    id="id_last_name"></p>
-            <p><label for="id_address">Address:</label>
-                <input type="text" name="address" value="{{ profile.address }}" class="input" maxlength="150"
-                    id="id_address"></p>
-            <p><label for="id_phone">Phone:</label>
-                <input type="text" name="phone" value="{{ profile.phone }}" class="input" maxlength="20" id="id_phone">
-            </p>
-            <p><label for="id_city">City:</label>
-                <select name="city" class="input" id="id_city">
-                    <option value="{{ profile.city }}" selected>{{ profile.city }}</option>
-                    <option value="İstanbul">Istanbul</option>
-                    <option value="Ankara">Ankara</option>
-                    <option value="İzmir">Izmir</option>
-                    <option value="Bursa">Bursa</option>
-                    <option value="Konya">Konya</option>
-                    <option value="Yozgat">Yozgat</option>
-                </select></p>
-            <p><label for="id_first_name">State :</label>
-                <input type="text" name="state" class="input" id="id_country" value="{{ profile.state }}"></p>
-            <p><label for="id_first_name">ZIP :</label>
-                <input type="text" name="ZIP" class="input" id="id_country" value="{{ profile.ZIP }}"></p>
-            <p><label for="id_first_name">Country :</label>
-                <input type="text" name="country" class="input" id="id_country" value="{{ profile.country }}"></p>
-            <div class="pull-right">
-                <button type="submit" class="primary-btn">Complete Order</button>
-            </div>
-        </div>
+       <br>
+       
     </div>
-
-    <div class="col-md-6">
-        <div class="shiping-methods">
-            <div class="section-title">
-                <h4 class="title">Payment Information</h4>
-            </div>
-            <p><label for="id_first_name">Total: {{ total }} USD </label>
-        </div>
-    </div>
-
-</Form>
+</div>
 {% endblock %}
