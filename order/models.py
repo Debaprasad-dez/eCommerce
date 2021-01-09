@@ -54,8 +54,8 @@ class Order(models.Model):
     STATUS = (
         ('New', 'New'),
         ('Accepted', 'Accepted'),
-        ('Preaparing', 'Preaparing'),
-        ('OnShipping', 'OnShipping'),
+        ('Preparing', 'Preparing'),
+        ('On Shipping', 'On Shipping'),
         ('Completed', 'Completed'),
         ('Canceled', 'Canceled'),
     )
@@ -65,13 +65,14 @@ class Order(models.Model):
     first_name = models.CharField(max_length=10)
     last_name = models.CharField(max_length=10)
     phone = models.CharField(blank=True, max_length=20)
+    tracking = models.CharField(blank=True, null=True, max_length=20)
     address = models.CharField(blank=True, max_length=150)
     city = models.CharField(blank=True, max_length=20)
     state = models.CharField(blank=True, max_length=20)
     ZIP = models.CharField(blank=True, max_length=20)
     country = models.CharField(blank=True, max_length=20)
     total = models.FloatField()
-    status=models.CharField(max_length=10,choices=STATUS,default='New')
+    status=models.CharField(max_length=50,choices=STATUS,default='New')
     ip = models.CharField(blank=True, max_length=20)
     adminnote = models.CharField(blank=True, max_length=100)
     create_at=models.DateTimeField(auto_now_add=True)

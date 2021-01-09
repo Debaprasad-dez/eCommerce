@@ -7,9 +7,10 @@ from product.models import *
 from .forms import *
 
 # Create your views here.
-
+page = 1
 
 def index(request):
+    global page
     setting = Setting.objects.get(pk=1)
     category = Category.objects.all()
     # men = Category.objects.get(title = 'Men')
@@ -18,7 +19,7 @@ def index(request):
     product_picked = Product.objects.all().filter(
         featured=True).order_by('-id')[:4]
     product_trending = Product.objects.all().order_by('?')[:12]
-    page = "home"
+    page = page-1
     print(request.user.username)
     context = {'setting': setting, 'page': page, 'category': category, 'product_slider': product_slider, 'range': range(
         1, len(product_slider)), 'product_picked': product_picked, 'product_trending': product_trending, # 'men': men, 'child': child
@@ -78,7 +79,7 @@ def search(request):
                             request, "No search results found. Please refine your search!")
             category = Category.objects.all()
             context = {'products': products, 'query': query,
-                       'category': category}
+                       'category': category, 'len': len(category) }
             return render(request, 'eshop/search_products.html', context)
     return HttpResponseRedirect('/')
 

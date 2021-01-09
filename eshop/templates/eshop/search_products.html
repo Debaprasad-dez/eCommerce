@@ -1,163 +1,68 @@
 {% extends 'eshop/base.html' %}
-{% block title %} {{ query }} results {% endblock %}
-{% block description %} {{ setting.description }} {% endblock %}
-{% block keywords %} {{ setting.keywords }} {% endblock %}
-
-{% block sidebar %} {% include 'sidebar.html' %} {% endblock %}
-
+{% block title %}
+{{ query }}
+{% endblock %} %}
+{% load static %}
 {% block body %}
-
-	<!-- BREADCRUMB -->
-	<div id="breadcrumb">
-		<div class="container">
-			<ul class="breadcrumb">
-				<li><a href="/">Home</a></li>
-				<li class="active">{{ query }} results</li>
-			</ul>
-		</div>
-	</div>
-	<!-- /BREADCRUMB -->
-	<!-- section -->
-	<div class="section">
-		<!-- container -->
-		<div class="container">
-			<!-- row -->
+<div class="container text-left my-1">
+	<a style="border-radius: 5px;font-weight: 400;" class="text-dark  px-3 py-1 small disabled" href="">
+		<h3>Search for {{ query }}</h3>
+		<p>{{ len }} Products</p>
+	</a>
+</div>
+<div class="container">
+	<div class="row">
+		<div class="col-md-8">
 			<div class="row">
+				{% for rs in products %}
+				<div class="col-6 mx-0 px-1 ">
+					<a href="{% url 'product_detail' rs.id rs.slug %}">
+						<div class="w-100 rounded">
+							<img class="w-100 rounded" id="listimg"
+								src="{{ rs.image.url }}"
+								alt="">
+							<div class="px-2 pt-2 ">
+								<div>
+									<h6 class="my-0 py-0 text-success"><Strong>{{ rs.brand_name }}</Strong></h6>
+									<p class="w-100 text-dark small mb-0 pb-0">{{ rs.title }}</p>
+									<a class="small disabled text-dark h4 mr-1 mt-0 pt-0" href=""
+										style="font-weight: 700;"><i class="fas fa-rupee-sign    "></i> {{ rs.price }}</a>
+									<a class="small disabled text-dark mt-0 pt-0" href=""><strike><i class="fas fa-rupee-sign    "></i> {{ rs.prevprice }}</strike></a>
+									<a class=" disabled text-dark mt-0 pt-0 ml-2" href="">3.4 <span
+											class="fa fa-star text-warning"></span></a>
 
-				<!-- MAIN -->
-				<div id="main" class="col-md-12">
-					<!-- store top filter -->
-					<div class="store-filter clearfix">
-						<div class="pull-left">
-							<div class="row-filter">
-								<a href="#"><i class="fa fa-th-large"></i></a>
-								<a href="#" class="active"><i class="fa fa-bars"></i></a>
-							</div>
-							<div class="sort-filter">
-								<span class="text-uppercase">Sort By:</span>
-								<select class="input">
-										<option value="0">Position</option>
-										<option value="0">Price</option>
-										<option value="0">Rating</option>
-									</select>
-								<a href="#" class="main-btn icon-btn"><i class="fa fa-arrow-down"></i></a>
-							</div>
-						</div>
-						<div class="pull-right">
-							<div class="page-filter">
-								<span class="text-uppercase">Show:</span>
-								<select class="input">
-										<option value="0">10</option>
-										<option value="1">20</option>
-										<option value="2">30</option>
-									</select>
-							</div>
-							<ul class="store-pages">
-								<li><span class="text-uppercase">Page:</span></li>
-								<li class="active">1</li>
-								<li><a href="#">2</a></li>
-								<li><a href="#">3</a></li>
-								<li><a href="#"><i class="fa fa-caret-right"></i></a></li>
-							</ul>
-						</div>
-					</div>
-					<!-- /store top filter -->
-
-					<!-- STORE -->
-					<div id="store">
-						<!-- row -->
-						<div class="row">
-
-                            <div class="col-md-12">
-						<div class="order-summary clearfix">
-							<div class="section-title">
-								<h3 class="title">Product List</h3>
-							</div>
-							<table class="shopping-cart-table table">
-								<thead>
-									<tr>
-										<th>Product</th>
-										<th></th>
-                                        <th>Category</th>
-										<th class="text-center">Price</th>
-										<th class="text-center">Quantity</th>
-
-										<th class="text-right"></th>
-									</tr>
-								</thead>
-								<tbody>
-
-                                {% for rs in products %}
-									<tr>
-										<td class="thumb"><a href="/product/{{ rs.id }}/{{ rs.slug }}">
-                                            <img src="{{ rs.image.url }}" alt="" style="height: 100px">
-                                        </a></td>
-
-										<td class="details"> <a href="/product/{{ rs.id }}/{{ rs.slug }}">{{ rs.title }}</a>	</td>
-                                        <td class="details"> <a href="/category/{{ rs.category_id }}/{{ rs.category.slug }}">{{ rs.category }}</a>	</td>
-										<td class="price text-center"><strong>{{ rs.price }}</strong></td>
-										<td class="qty text-center"><input class="input" type="number" value="1"></td>
-
-										<td class="text-right"><a href="/order/addtoshopcart/{{ rs.id }}" class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</a></td>
-									</tr>
-                                    {% endfor %}
-
-								</tbody>
-
-							</table>
-
-						</div>
-
-					</div>
-
-						</div>
-						<!-- /row -->
-					</div>
-					<!-- /STORE -->
-
-					<!-- store bottom filter -->
-					<div class="store-filter clearfix">
-						<div class="pull-left">
-							<div class="row-filter">
-								<a href="#"><i class="fa fa-th-large"></i></a>
-								<a href="#" class="active"><i class="fa fa-bars"></i></a>
-							</div>
-							<div class="sort-filter">
-								<span class="text-uppercase">Sort By:</span>
-								<select class="input">
-										<option value="0">Position</option>
-										<option value="0">Price</option>
-										<option value="0">Rating</option>
-									</select>
-								<a href="#" class="main-btn icon-btn"><i class="fa fa-arrow-down"></i></a>
+								</div>
+								<a href="{% url 'addtoshopcart' rs.id %}" class="my-2 w-md-100 text-light bg-dark p-1 px-3 mx-0 rounded"
+									style="border: none">Add to cart</a>
+								<a href="{% url 'addtowishlist' rs.id %}" class="my-2 rounded-circle ml-1"
+									style="border: none;height: 32px !important;width: 32px;background: red;object-fit: cover;object-position: center;"><i
+										class="far fa-heart text-white"></i></a>
 							</div>
 						</div>
-						<div class="pull-right">
-							<div class="page-filter">
-								<span class="text-uppercase">Show:</span>
-								<select class="input">
-										<option value="0">10</option>
-										<option value="1">20</option>
-										<option value="2">30</option>
-									</select>
-							</div>
-							<ul class="store-pages">
-								<li><span class="text-uppercase">Page:</span></li>
-								<li class="active">1</li>
-								<li><a href="#">2</a></li>
-								<li><a href="#">3</a></li>
-								<li><a href="#"><i class="fa fa-caret-right"></i></a></li>
-							</ul>
-						</div>
-					</div>
-					<!-- /store bottom filter -->
+					</a>
+					<br>
 				</div>
-				<!-- /MAIN -->
+				{% endfor %}
+				<!--Loop ends here-->
 			</div>
-			<!-- /row -->
-		</div>
-		<!-- /container -->
-	</div>
-	<!-- /section -->
+			<!-- <div class="container">
 
+				<div class="row">
+					<div class="col-1"></div>
+					<div class="col-5 text-right">
+						<button class="bg-light text-dark border p-2">
+							previous
+						</button>
+					</div>
+					<div class="col-5 text-left">
+						<button class="bg-success text-white border p-2 px-4">
+							next
+						</button>
+					</div>
+					<div class="col-1"></div>
+				</div>
+			</div> -->
+		</div>
+	</div>
+</div>
 {% endblock %}

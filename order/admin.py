@@ -2,7 +2,7 @@ from django.contrib import admin
 from .models import *
 # Register your models here.
 class ShopCartAdmin(admin.ModelAdmin):
-    list_display = ['product','user', 'quantity', 'price', 'amount' ]
+    list_display = ['user', 'product', 'quantity', 'price', 'amount' ]
     list_filter = ['user']
 class OrderProductline(admin.TabularInline):
     model = OrderProduct
@@ -12,9 +12,9 @@ class OrderProductline(admin.TabularInline):
 
 
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ['paid', 'first_name', 'last_name','phone','city','total', 'status']
+    list_display = ['first_name', 'last_name', 'paid', 'phone','city','total', 'status']
     list_filter = ['status', 'paid']
-    readonly_fields = ('user','address','city','country','phone','first_name','ip', 'last_name','phone','city','total')
+    readonly_fields = ('user', 'first_name', 'last_name', 'phone', 'address','city','country', 'city','total', 'ip')
     can_delete = False
     inlines = [OrderProductline]
 

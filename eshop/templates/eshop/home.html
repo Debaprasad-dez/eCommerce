@@ -34,56 +34,24 @@ Home
 </div>
 <br>
 <div class="container text-center my-3">
-    <a style="border-radius: 10px;font-weight: 400;" class="text-light bg-dark px-4 py-2" href="">CATEGORIES</a>
+    <a style="border-radius: 5px;font-weight: 400;" class="text-light bg-dark px-3 py-1 small disabled"
+        href="">CATEGORIES</a>
 </div>
-<br>
 <div class="container">
     <div class="row">
-        <div class="col-4 ">
-            <a href="">
-                <h2>{{ category.0.title }}</h2>
-                <img class="w-100" id="catbox"
-                    src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MjV8fG1lbnxlbnwwfDJ8MHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
-                    alt="">
-            </a>
+{% for item in category %}
+{% if item.is_root_node %}
+            <div class="col-4 mx-auto my-3">
+                <a href="{% url 'category_product' item.id item.slug %}">
+                    <img class="w-100" id="catbox"
+                        src="{{ item.image.url }}"
+                        alt="">
+                </a>
+            </div>
+            {% endif %}
+        {% endfor %}
         </div>
-        <div class="col-4">
-            <a href="">
-                <h2>{{ category.1.title }}</h2>
-                <img class="w-100" id="catbox"
-                    src="https://images.unsplash.com/photo-1521510186458-bbbda7aef46b?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MXx8d29tZW58ZW58MHwyfDB8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
-                    alt="">
-            </a>
-        </div>
-        <div class="col-4">
-            <a href="">
-                <h2>{{ category.2.title }}</h2>
-                <img class="w-100" id="catbox"
-                    src="https://images.unsplash.com/photo-1524855567984-d7bbc2893539?ixid=MXwxMjA3fDB8MHxzZWFyY2h8M3x8Y2hpbGRyZW58ZW58MHwyfDB8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
-                    alt="">
-            </a>
-        </div>
-    </div>
     <br>
-    <div class="row">
-        <div class="col-6">
-            <a href="">
-                <h2>{{ category.3.title }}</h2>
-
-                <img class="w-100" id="catbox"
-                    src="https://images.unsplash.com/photo-1588058365548-9efe5acb8077?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MjJ8fGVsZWN0cm9uaWNzfGVufDB8MHwwfA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
-                    alt="">
-            </a>
-        </div>
-        <div class="col-6">
-            <a href="">
-                <h2>{{ category.4.title }}</h2>
-                <img class="w-100" id="catbox"
-                    src="https://images.unsplash.com/photo-1588058365548-9efe5acb8077?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MjJ8fGVsZWN0cm9uaWNzfGVufDB8MHwwfA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
-                    alt="">
-            </a>
-        </div>
-    </div>
 </div>
 <br>
 <div class="container text-center my-3">
@@ -143,4 +111,35 @@ Home
         </li>
     {% endrecursetree %}
 </ul> -->
+<!-- <ul>
+{% for item in category %}
+{% if item.is_root_node %}
+{{ item.title }}
+{% endif %}
+{% endfor %}
+</ul> -->
+
 {% endblock %}
+
+<!-- {% load mptt_tags %}
+            <ul>
+                {% recursetree category %}
+                <li>
+                    {{ node.title }}
+                    {% if not node.is_leaf_node %}
+                    <ul class="children">
+                        {{ children }}
+                    </ul>
+                    {% endif %}
+                </li>
+                {% endrecursetree %}
+            </ul> -->
+            <!-- {% load mptt_tags %}
+            <ul>
+                {% recursetree category %}
+                <li>
+                    {{ node.title }}
+
+                </li>
+                {% endrecursetree %}
+            </ul> -->
