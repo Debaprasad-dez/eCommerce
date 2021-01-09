@@ -1,5 +1,8 @@
 {% extends 'user/base.html' %}
 {% load static %}
+{% block title %}
+Sign Up
+{% endblock %}
 {% block body %}
 <div class="container ">
     <div class=" px-4 py-5" style="border-radius: 20px;background: rgba(1, 65, 1, 0.103);">
@@ -10,7 +13,7 @@
                     style="background: rgb(10, 160, 10);">Register</button>
             </div>
             <div class="col-6 text-center">
-                <button class="w-100 bg-dark border text-white py-2 rounded-pill">Login</button>
+                <a href="{% url 'login_form' %}" class="btn w-100 bg-dark border text-white py-2 rounded-pill">Login</a>
             </div>
         </div>
         <br>
@@ -18,21 +21,21 @@
             {% csrf_token %}
             {% for field in form %}
                 <p>
-                    {{ field.label_tag }}<br>
+                    <!-- {{ field.label_tag }}<br> -->
                     {{ field }}
-                    {% if field.help_text %}
+                    <!-- {% if field.help_text %}
                         <small style="color: grey">{{ field.help_text }}</small>
-                    {% endif %}
+                    {% endif %} -->
                     
                     {% for error in field.errors %}
                         <p style="color: red">{{ error }}</p>
                     {% endfor %}
                 </p>
             {% endfor %}
-            <button type="submit">Sign up</button>
+            <button class="py-2 w-100 rounded-pill" style="border-radius: solid 2px black;background: white;" type="submit">Sign up</button>
         </form>
-        <br>
-        <br>
+        <!-- <br> -->
+        <!-- <br>
         <div class="text-center">
 
             <p>Sign-in using</p>
@@ -45,7 +48,7 @@
             <div class="col-6 text-center">
                 <button class="w-100  border text-white py-2 rounded-pill" style="background: blue;">Facebook</button>
             </div>
-        </div>
+        </div> -->
     </div>
 </div>
 

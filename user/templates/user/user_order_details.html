@@ -53,7 +53,7 @@
 
                         <tr>
                             <th class="text-left">Date</th>
-                            <td class="text-left">{{ order.create_at}}</td>
+                            <td class="text-left">{{ order.create_at|date:"M d, Y" }} {{ order.create_at|time:"H:i:s" }}</td>
                         </tr>
                         {% if order.status == 'On Shipping' %}
                         <tr>

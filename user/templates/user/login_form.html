@@ -1,12 +1,15 @@
 {% extends 'user/base.html' %}
 {% load static %}
+{% block title %}
+Log In
+{% endblock %}
 {% block body %}
 <div class="container ">
     <div class=" px-4 py-5" style="border-radius: 20px;background: rgba(1, 65, 1, 0.103);">
 
         <div class="row">
             <div class="col-6 text-center">
-                <button class="w-100 bg-dark border text-white py-2 rounded-pill">Register</button>
+                <a href="{% url 'signup_form' %}" class="btn w-100 bg-dark border text-white py-2 rounded-pill">Register</a>
             </div>
             <div class="col-6 text-center">
                 <button class="w-100 border py-2 rounded-pill text-white"
@@ -20,11 +23,11 @@
             <br>
             <br>
             <div class="col-11 mx-auto">
-                <button type="submit" class=" py-2 w-100 rounded-pill"
+                <button type="submit" class="py-2 w-100 rounded-pill"
                     style="border-radius: solid 2px black;background: white;">Proceed</button>
             </div>
         </form>
-        <br>
+        <!-- <br>
         <br>
         <div class="text-center">
             <p>other options to log in</p>
@@ -37,7 +40,7 @@
             <div class="col-6 text-center">
                 <button class="w-100  border text-white py-2 rounded-pill" style="background: blue;">Facebook</button>
             </div>
-        </div>
+        </div> -->
     </div>
 </div>
 <br><br>
