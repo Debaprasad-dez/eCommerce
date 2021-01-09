@@ -25,7 +25,7 @@ SECRET_KEY = '@^+#vmsw^q)tlfc5p0j&8$z^9u)iidu08-pu+ujau74)5(t&s%'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['buckler-eshop.herokuapp.com', '127.0.0.1']
 
 
 # Application definition
