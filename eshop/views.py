@@ -1,3 +1,4 @@
+from django.db.models.query_utils import subclasses
 from django.shortcuts import render, HttpResponse, HttpResponseRedirect
 from django.http import JsonResponse
 from django.contrib import messages
@@ -20,6 +21,7 @@ def index(request):
         featured=True).order_by('-id')[:4]
     product_trending = Product.objects.all().order_by('?')[:12]
     page = page-1
+    print(page)
     print(request.user.username)
     context = {'setting': setting, 'page': page, 'category': category, 'product_slider': product_slider, 'range': range(
         1, len(product_slider)), 'product_picked': product_picked, 'product_trending': product_trending, # 'men': men, 'child': child
@@ -54,10 +56,34 @@ def contactus(request):
 
 def category_products(request, id, slug):
     catdata = Category.objects.get(pk=id)
-    products = Product.objects.filter(category_id=id)  # default language
-    context = {'products': products,
+    if catdata.is_leaf_node():
+        # print("Leaf")
+        products = Product.objects.filter(category_id=id) 
+        context = {
+                'products': products,
                # 'category':category,
-               'catdata': catdata}
+               'catdata': catdata,
+            #    'subcat': subcat,
+               }
+    else:
+        subcat = Category.objects.filter(parent_id=id)
+        # print(subcat)
+        for i in subcat:
+            print(i.id)
+            products = Product.objects.filter(category_id=i.id)
+            
+        # products = Product.objects.filter(category_id=id)
+        context = {
+               'products': products,
+               'catdata': catdata,
+               'subcat': subcat,
+               }
+    # products = Product.objects.filter(category_id=id)  # default language
+    # context = {'products': products,
+    #            # 'category':category,
+    #            'catdata': catdata,
+    #         #    'subcat': subcat,
+    #            }
     return render(request, 'eshop/category_products.html', context)
 
 
