@@ -57,34 +57,27 @@ def contactus(request):
 def category_products(request, id, slug):
     catdata = Category.objects.get(pk=id)
     if catdata.is_leaf_node():
-        # print("Leaf")
+        print("Leaf")
         products = Product.objects.filter(category_id=id) 
         context = {
                 'products': products,
-               # 'category':category,
-               'catdata': catdata,
-            #    'subcat': subcat,
+                'catdata': catdata,
                }
+        print(products)
     else:
         subcat = Category.objects.filter(parent_id=id)
-        # print(subcat)
-        for i in subcat:
-            print(i.id)
-            products = Product.objects.filter(category_id=i.id)
+        print("Not Leaf")
+        products = Product.objects.filter(category__parent_id=id)
             
-        # products = Product.objects.filter(category_id=id)
         context = {
                'products': products,
                'catdata': catdata,
                'subcat': subcat,
                }
-    # products = Product.objects.filter(category_id=id)  # default language
-    # context = {'products': products,
-    #            # 'category':category,
-    #            'catdata': catdata,
-    #         #    'subcat': subcat,
-    #            }
+
     return render(request, 'eshop/category_products.html', context)
+
+
 
 
 def search(request):
