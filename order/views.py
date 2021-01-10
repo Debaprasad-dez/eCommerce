@@ -291,3 +291,9 @@ def addtowishlist(request, id):
             data.save()  #
         messages.success(request, "Product added to Wish List")
         return HttpResponseRedirect(url)
+
+@login_required(login_url='/user/login')  # Check login
+def deletefromlist(request, id):
+    WishList.objects.filter(id=id).delete()
+    messages.success(request, "Your item is deleted form Wish List.")
+    return HttpResponseRedirect("/order/wishlist")
