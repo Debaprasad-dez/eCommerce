@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Avg, Count
 from django.utils.safestring import mark_safe
 from ckeditor_uploader.fields import RichTextUploadingField
 from mptt.fields import TreeForeignKey
@@ -46,8 +47,6 @@ class Category(MPTTModel):
             k = k.parent
         return ' / '.join(full_path[::-1])
 
-
-
 class Product(models.Model):
     STATUS = (
         ('True', 'True'),
@@ -78,6 +77,20 @@ class Product(models.Model):
     
     def image_tag(self):
         return mark_safe('<img_src="{}" height="50"/>'.format(self.image.url))
+
+    def avaregereview(self):
+        reviews = Review.objects.filter(product=self, status='True').aggregate(average=Avg('rate'))
+        avg=0
+        if reviews["average"] is not None:
+            avg=float(reviews["average"])
+        return avg
+
+    def countreview(self):
+        reviews = Review.objects.filter(product=self, status='True').aggregate(count=Count('id'))
+        cnt=0
+        if reviews["count"] is not None:
+            cnt = int(reviews["count"])
+        return cnt
     
     @property
     def offer(self):
@@ -113,7 +126,7 @@ class Review(models.Model):
     update_at=models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.product
+        return self.product.title
 
 class ReviewForm(ModelForm):
     class Meta:

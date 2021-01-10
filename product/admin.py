@@ -53,6 +53,13 @@ class ProductAdmin(admin.ModelAdmin):
     inlines = [ProductImageInline]
     prepopulated_fields = {'slug': ('title',)}
     
+class ReviewAdmin(admin.ModelAdmin):
+    list_display = ['user', 'rate', 'status','create_at']
+    list_filter = ['status', 'rate', ]
+    readonly_fields = ('ip','user','product','rate','id')
+
+
 admin.site.register(Category, CategoryAdmin2)
 admin.site.register(Product, ProductAdmin)
 admin.site.register(Images)
+admin.site.register(Review, ReviewAdmin)

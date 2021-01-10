@@ -28,10 +28,8 @@ def index(request):
                }
     return render(request, 'eshop/home.html', context)
 
-
 def aboutus(request):
     return HttpResponse('About Us')
-
 
 def contactus(request):
     category = Category.objects.all()
@@ -52,7 +50,6 @@ def contactus(request):
     form = ContactForm
     context = {'setting': setting, 'form': form, 'category': category}
     return render(request, 'eshop/contactus.html', context)
-
 
 def category_products(request, id, slug):
     catdata = Category.objects.get(pk=id)
@@ -76,9 +73,6 @@ def category_products(request, id, slug):
                }
 
     return render(request, 'eshop/category_products.html', context)
-
-
-
 
 def search(request):
     if request.method == 'POST':  # check post
@@ -126,9 +120,9 @@ def product_detail(request,id,slug):
     product = Product.objects.get(pk=id)
     images = Images.objects.filter(product_id=id)
     context = {'product': product,'category': category,
-               'images': images,
+               'images': images, 'range': range(1, (len(images)+1)),
                }
-    
+    print(product.countreview())
     return render(request,'eshop/product-page.html',context)
 
 # def ajaxcolor(request):
