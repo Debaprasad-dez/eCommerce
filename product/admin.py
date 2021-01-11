@@ -42,21 +42,27 @@ class CategoryAdmin2(DraggableMPTTAdmin):
     def related_products_cumulative_count(self, instance):
         return instance.products_cumulative_count
     related_products_cumulative_count.short_description = 'Related products (in tree)'
-
+@admin_thumbnails.thumbnail('image')
 class ProductImageInline(admin.TabularInline):
     model = Images
+    readonly_fields = ('id',)
     extra = 7
     
 @admin_thumbnails.thumbnail('image')
 class ImagesAdmin(admin.ModelAdmin):
     list_display = ['image','title','image_thumbnail']
 
+class ProductVariantsInline(admin.TabularInline):
+    model = Variants
+    readonly_fields = ('image_tag',)
+    extra = 1
+    show_change_link = True
 
 class ProductAdmin(admin.ModelAdmin):
     list_display = ['title', 'category', 'status', 'image_tag']
     list_filter = ['category']
     readonly_fields = ('image_tag',)
-    inlines = [ProductImageInline]
+    inlines = [ProductImageInline, ProductVariantsInline ]
     prepopulated_fields = {'slug': ('title',)}
     
 class ReviewAdmin(admin.ModelAdmin):
@@ -64,8 +70,18 @@ class ReviewAdmin(admin.ModelAdmin):
     list_filter = ['status', 'rate', ]
     readonly_fields = ('ip','user','product','rate','id')
 
+class ColorAdmin(admin.ModelAdmin):
+    list_display = ['name','code','color_tag']
+class SizeAdmin(admin.ModelAdmin):
+    list_display = ['name','code']
+class VariantsAdmin(admin.ModelAdmin):
+    list_display = ['title','product','color','size','price','quantity','image_tag']
+
 
 admin.site.register(Category, CategoryAdmin2)
 admin.site.register(Product, ProductAdmin)
 admin.site.register(Images, ImagesAdmin)
 admin.site.register(Review, ReviewAdmin)
+admin.site.register(Color,ColorAdmin)
+admin.site.register(Size,SizeAdmin)
+admin.site.register(Variants,VariantsAdmin)
