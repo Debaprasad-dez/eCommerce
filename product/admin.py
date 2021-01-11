@@ -1,6 +1,8 @@
 from django.contrib import admin
 from mptt.admin import DraggableMPTTAdmin
 from .models import *
+import admin_thumbnails
+
 # Register your models here.
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ['title', 'parent', 'status']
@@ -41,13 +43,17 @@ class CategoryAdmin2(DraggableMPTTAdmin):
         return instance.products_cumulative_count
     related_products_cumulative_count.short_description = 'Related products (in tree)'
 
-    
 class ProductImageInline(admin.TabularInline):
     model = Images
     extra = 7
     
+@admin_thumbnails.thumbnail('image')
+class ImagesAdmin(admin.ModelAdmin):
+    list_display = ['image','title','image_thumbnail']
+
+
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ['title', 'category', 'status']
+    list_display = ['title', 'category', 'status', 'image_tag']
     list_filter = ['category']
     readonly_fields = ('image_tag',)
     inlines = [ProductImageInline]
@@ -61,5 +67,5 @@ class ReviewAdmin(admin.ModelAdmin):
 
 admin.site.register(Category, CategoryAdmin2)
 admin.site.register(Product, ProductAdmin)
-admin.site.register(Images)
+admin.site.register(Images, ImagesAdmin)
 admin.site.register(Review, ReviewAdmin)
