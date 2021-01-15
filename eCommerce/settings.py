@@ -159,6 +159,6 @@ PAYU_CONFIG = {
     "merchant_key": "g4MAEe9G",
     "merchant_salt": "XZEbwGu5lz",
     "mode": "test",
-    "success_url": "http://buckler-eshop.herokuapp.com/order/success",
-    "failure_url": "http://buckler-eshop.herokuapp.com/order/failure"
+    "success_url": "http://127.0.0.1:8000/order/success",
+    "failure_url": "http://127.0.0.1:8000/order/failure"
 }
