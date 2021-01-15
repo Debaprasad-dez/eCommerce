@@ -83,7 +83,11 @@ Cart
                     <a class="bg-dark mr-2 px-2 py-1 text-white rounded" href="">Qty: {{ item.quantity }}</a>
                     <br>
                     <br>
+                    {% if item.product.variant == 'None' %}
                     <a class="text-dark disabled" href="">Rs. {{ item.product.price }}</a>
+                    {% else %}
+                    <a class="text-dark disabled" href="">Rs. {{ item.variant.price }}</a>
+                    {% endif %}
                     <a class="text-dark disabled" href=""><strike>{{ item.product.prevprice }}</strike></a>
                     <a class="text-danger disabled" href="">{{ item.product.offer }}% off</a>
                 </div>

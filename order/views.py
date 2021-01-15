@@ -9,6 +9,7 @@ from django.utils.crypto import get_random_string
 from django.conf import settings
 from paywix.payu import Payu
 from django.views.decorators.csrf import csrf_exempt
+from product.models import *
 
 
 MERCHANT_KEY = '7RMI_B8Qxc43LG2S'
@@ -43,26 +44,35 @@ def addtoshopcart(request, id):
     url = request.META.get('HTTP_REFERER')  # get last url
     current_user = request.user  # Access User Session information
     product = Product.objects.get(pk=id)
-    checkinproduct = ShopCart.objects.filter(
-        product_id=id, user_id=current_user.id)  # Check product in shopcart
-    if checkinproduct:
-        control = 1  # The product is in the cart
+    if product.variant != 'None':
+        variantid = request.POST.get('variantid')  # from variant add to cart
+        checkinvariant = ShopCart.objects.filter(variant_id=variantid, user_id=current_user.id)  # Check product in shopcart
+        if checkinvariant:
+            control = 1 # The product is in the cart
+        else:
+            control = 0 # The product is not in the cart"""
     else:
-        control = 0  # The product is not in the cart"""
+        checkinproduct = ShopCart.objects.filter(product_id=id, user_id=current_user.id) # Check product in shopcart
+        if checkinproduct:
+            control = 1 # The product is in the cart
+        else:
+            control = 0 # The product is not in the cart"""
 
     if request.method == 'POST':  # if there is a post
         form = ShopCartForm(request.POST)
         if form.is_valid():
             if control == 1:  # Update  shopcart
-                data = ShopCart.objects.get(
-                    product_id=id, user_id=current_user.id)
+                if product.variant == 'None':
+                    data = ShopCart.objects.get(product_id=id, user_id=current_user.id)
+                else:
+                    data = ShopCart.objects.get(product_id=id, variant_id=variantid, user_id=current_user.id)
                 data.quantity += form.cleaned_data['quantity']
                 data.save()  # save data
             else:  # Inser to Shopcart
                 data = ShopCart()
                 data.user_id = current_user.id
                 data.product_id = id
-                # data.variant_id = variantid
+                data.variant_id = variantid
                 data.quantity = form.cleaned_data['quantity']
                 data.save()
         else:
@@ -81,11 +91,10 @@ def addtoshopcart(request, id):
             data.user_id = current_user.id
             data.product_id = id
             data.quantity = 1
-            # data.variant_id =None
+            data.variant_id = None
             data.save()  #
         messages.success(request, "Product added to Shopcart")
         return HttpResponseRedirect(url)
-
 
 def shopcart(request):
     category = Category.objects.all()
@@ -94,14 +103,17 @@ def shopcart(request):
     # shipping > ZIP 799000 to 799250 shipping = 0;
     total = 0
     for rs in shopcart:
-        total += rs.product.price * rs.quantity
+        if rs.product.variant == 'None':
+            total += rs.product.price * rs.quantity
+        else:
+            total += rs.variant.price * rs.quantity
+            
     # return HttpResponse(str(total))
     context = {'shopcart': shopcart,
                'category': category,
                'total': total,
                }
     return render(request, 'eshop/cart.html', context)
-
 
 @login_required(login_url='/user/login')  # Check login
 def deletefromcart(request, id):
@@ -116,8 +128,11 @@ def orderproduct(request):
     shopcart = ShopCart.objects.filter(user_id=current_user.id)
     total = 0
     for rs in shopcart:
-        total += rs.product.price * rs.quantity
-
+        if rs.product.variant == 'None':
+            total += rs.product.price * rs.quantity
+        else:
+            total += rs.variant.price * rs.quantity
+            
     if request.method == 'POST':  # if there is a post
         form = OrderForm(request.POST)
         # return HttpResponse(request.POST.items())
@@ -180,15 +195,28 @@ def orderproduct(request):
                 detail.product_id = rs.product_id
                 detail.user_id = current_user.id
                 detail.quantity = rs.quantity
-                detail.price = rs.product.price
-
-                # detail.variant_id   = rs.variant_id
+                # detail.price = rs.product.price
+                if rs.product.variant == 'None':
+                    detail.price    = rs.product.price
+                else:
+                    detail.price = rs.variant.price
+                detail.variant_id   = rs.variant_id
                 detail.amount = rs.amount
                 detail.save()
                 # ***Reduce quantity of sold product from Amount of Product
-                product = Product.objects.get(id=rs.product_id)
-                product.amount -= rs.quantity
-                product.save()
+                
+                if  rs.product.variant=='None':
+                    product = Product.objects.get(id=rs.product_id)
+                    product.amount -= rs.quantity
+                    product.save()
+                else:
+                    variant = Variants.objects.get(id=rs.product_id)
+                    variant.quantity -= rs.quantity
+                    variant.save()
+                
+                # product = Product.objects.get(id=rs.product_id)
+                # product.amount -= rs.quantity
+                # product.save()
 
                 # ************ <> *****************
             # Clear & Delete shopcart
