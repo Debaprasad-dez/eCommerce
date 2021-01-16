@@ -79,12 +79,14 @@ class Product(models.Model):
     prevprice = models.FloatField()
     price = models.FloatField()
     variant = models.CharField(max_length=20, choices=VARIANTS, default='None')
+    dealActive = models.BooleanField(default=False)
     deals = models.CharField(max_length=30, choices=DEALS, default='None')
     amount = models.IntegerField()
     minamount = models.IntegerField()
     detail = RichTextUploadingField()
     status = models.CharField(max_length=20, choices=STATUS)
     slug = models.SlugField()
+    dealSlug = models.SlugField()
     featured = models.BooleanField(default=False)
     create_at = models.DateField(auto_now_add=True)
     update_at = models.DateField(auto_now=True)
@@ -94,6 +96,9 @@ class Product(models.Model):
 
     def get_absolute_url(self):
         return reverse('category_detail', kwargs={'slug': self.slug})
+    
+    def get_absolute_url(self):
+        return reverse('category_detail', kwargs={'slug': self.dealSlug})
 
     def image_tag(self):
         if self.image.url is not None:
@@ -124,17 +129,28 @@ class Product(models.Model):
 
     image_tag.short_description = 'Image'
 
+
 class Deal(models.Model):
     CHOICES = (
         ('Deal of the day', 'Deal of the day'),
         ('Deal of the week', 'Deal of the week'),
         ('Deal of the month', 'Deal of the month'),
     )
+    active = models.BooleanField(default=False)
     image = models.ImageField(upload_to='Deals/', null='True')
-    deal = models.CharField(max_length=25, choices=CHOICES, null=True, blank=True)
-    start = models.DateField(auto_now_add=True)
+    deal = models.CharField(
+        max_length=25, choices=CHOICES, null=True, blank=True)
+    onlyChar1 = models.CharField(max_length=10, unique=True, null=True)
+    onlyChar2 = models.CharField(max_length=10, unique=True, null=True)
+    start = models.DateField(auto_now_add=False)
     end = models.DateField(auto_now_add=False)
+    dealSlug = models.SlugField()
+    def __str__(self):
+        return self.deal
     
+    def get_absolute_url(self):
+        return reverse('category_detail', kwargs={'slug': self.dealSlug})
+
 class Images(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     title = models.CharField(max_length=50, blank=True)
@@ -226,7 +242,8 @@ class Variants(models.Model):
 
 
 class Offer(models.Model):
-    category = models.ForeignKey(Category, related_name='offer', on_delete=models.CASCADE)
+    category = models.ForeignKey(
+        Category, related_name='offer', on_delete=models.CASCADE)
     off = models.IntegerField(null=True, blank=True)
     name = models.CharField(max_length=50, null=True, blank=True)
     show = models.BooleanField(default=False)
@@ -234,4 +251,3 @@ class Offer(models.Model):
 
     def __str__(self):
         return self.name
-

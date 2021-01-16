@@ -39,21 +39,80 @@ Home
 </div>
 <div class="container">
     <div class="row">
-{% for item in category %}
-{% if item.is_root_node %}
-            <div class="col-4 mx-auto my-3">
-                <a href="{% url 'category_product' item.id item.slug %}">
-                    <img class="w-100" id="catbox"
-                        src="{{ item.image.url }}"
-                        alt="">
-                </a>
-            </div>
-            {% endif %}
-        {% endfor %}
+        {% for item in category %}
+        {% if item.is_root_node %}
+        <div class="col-4 mx-auto my-3">
+            <a href="{% url 'category_product' item.id item.slug %}">
+                <img class="w-100" id="catbox" src="{{ item.image.url }}" alt="">
+            </a>
         </div>
+        {% endif %}
+        {% endfor %}
+    </div>
     <br>
 </div>
 <br>
+
+<!--deal of the day start-->
+{% for item in deal %}
+<div class="col-md-8 mx-auto">
+    <a href="{% url 'deals' item.dealSlug %}">
+    <img id="{{ item.onlyChar2 }}" class="w-100"
+        src="{{ item.image.url }}"
+        alt=""></a>
+    <style>
+        #{{ item.onlyChar1 }} {
+            text-align: center;
+            font-size: 16px;
+            margin-top: 0px;
+        }
+    </style>
+    <p class="mt-2" id="{{ item.onlyChar1 }}"></p>
+    <script>
+        // Set the date we're counting down to
+        var countDownDate = new Date('{{ item.end|date:"M d, Y" }} {{ item.end|time:"H:i:s" }}').getTime();
+
+        // Update the count down every 1 second
+        var x = setInterval(function () {
+
+            // Get today's date and time
+            var now = new Date().getTime();
+
+            // Find the distance between now and the count down date
+            var distance = countDownDate - now;
+
+            // Time calculations for days, hours, minutes and seconds
+            var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            // Output the result in an element with id="{{ item.onlyChar1 }}"
+            document.getElementById("{{ item.onlyChar1 }}").innerHTML = 
+            {% if item.deal == 'Deal of the month' or item.deal == 'Deal of the week' %}
+            "<strong>" + days +
+                "</strong> <small classname={}>days</small> <strong>" + hours +
+                    "</strong> <small>hours</small> <strong>" +
+                    minutes + "</strong> <small>minutes</small> <strong>" + seconds +
+                    "</strong> <small>seconds</small> left! Hurry";
+            {% endif %}
+                 "<strong>" + hours +
+                "</strong> <small>hours</small> <strong>" +
+                minutes + "</strong> <small>minutes</small> <strong>" + seconds +
+                "</strong> <small>seconds</small> left! Hurry";
+
+            // If the count down is over, write some text 
+            if (distance < 0) {
+                clearInterval(x);
+                document.getElementById("{{ item.onlyChar1 }}").style.display = "none";
+                document.getElementById("{{ item.onlyChar2 }}").style.display = "none";
+            }
+        }, 1000);
+    </script>
+</div>
+{% endfor %}
+<!--deal of the day end-->
+
 <div class="container text-center my-3">
     <a style="border-radius: 10px;font-weight: 400;" class="text-light bg-dark px-4 py-2" href="">TRENDING</a>
 </div>
@@ -74,8 +133,10 @@ Home
                                 {{ item.price }}</a>
                             <a class="small disabled text-dark mt-0 pt-0" href=""><strike>Rs.
                                     {{ item.prevprice}}</strike></a>
-                            <a class=" disabled text-dark mt-0 pt-0 ml-2" href="">{{ item.avaregereview|stringformat:".2f"}} <span
-                                    class="fa fa-star text-warning"></span> | {{ item.countreview }} review{% if item.countreview > 1 %}s{% endif %}</a>
+                            <a class=" disabled text-dark mt-0 pt-0 ml-2"
+                                href="">{{ item.avaregereview|stringformat:".2f"}} <span
+                                    class="fa fa-star text-warning"></span> | {{ item.countreview }}
+                                review{% if item.countreview > 1 %}s{% endif %}</a>
                         </div>
                         <a href="{% url 'addtoshopcart' item.id %}"
                             class="my-2 w-md-100 text-light bg-dark p-1 px-3 mx-0 rounded" style="border: none">Add to
@@ -93,7 +154,6 @@ Home
     </div>
 </div>
 
-<a href="{% url 'offer' 1 %}">CLICK</a>
 
 <!-- {{ men.title }} <br>
 {% for item in child %}
@@ -136,7 +196,7 @@ Home
                 </li>
                 {% endrecursetree %}
             </ul> -->
-            <!-- {% load mptt_tags %}
+<!-- {% load mptt_tags %}
             <ul>
                 {% recursetree category %}
                 <li>

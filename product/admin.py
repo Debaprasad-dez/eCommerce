@@ -63,7 +63,7 @@ class ProductAdmin(admin.ModelAdmin):
     list_filter = ['category']
     readonly_fields = ('image_tag',)
     inlines = [ProductImageInline, ProductVariantsInline ]
-    prepopulated_fields = {'slug': ('title',)}
+    prepopulated_fields = {'slug': ('title',), 'dealSlug': ('deals',)}
     
 class ReviewAdmin(admin.ModelAdmin):
     list_display = ['user', 'rate', 'status','create_at']
@@ -77,6 +77,11 @@ class SizeAdmin(admin.ModelAdmin):
 class VariantsAdmin(admin.ModelAdmin):
     list_display = ['title','product','color','size','price','quantity','image_tag']
 
+class DealsAdmin(admin.ModelAdmin):
+    list_display = ['deal','start','end', 'active']
+    list_filter = ['active', ]
+    prepopulated_fields = {'dealSlug': ('deal',)}
+
 
 admin.site.register(Category, CategoryAdmin2)
 admin.site.register(Product, ProductAdmin)
@@ -85,4 +90,4 @@ admin.site.register(Review, ReviewAdmin)
 admin.site.register(Color,ColorAdmin)
 admin.site.register(Size,SizeAdmin)
 admin.site.register(Variants,VariantsAdmin)
-admin.site.register(Offer)
+admin.site.register(Deal, DealsAdmin)

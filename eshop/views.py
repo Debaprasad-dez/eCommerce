@@ -1,3 +1,4 @@
+from django import http
 from django.db.models.query_utils import subclasses
 from django.shortcuts import render, HttpResponse, HttpResponseRedirect
 from django.template.loader import render_to_string
@@ -17,6 +18,7 @@ def index(request):
     category = Category.objects.all()
     # men = Category.objects.get(title = 'Men')
     # child = men.get_children()
+    deal = Deal.objects.filter(active=True)
     product_slider = Product.objects.all().order_by('-id')[:10]
     product_picked = Product.objects.all().filter(
         featured=True).order_by('-id')[:4]
@@ -25,15 +27,13 @@ def index(request):
     print(page)
     print(request.user.username)
     context = {'setting': setting, 'page': page, 'category': category, 'product_slider': product_slider, 'range': range(
-        1, len(product_slider)), 'product_picked': product_picked, 'product_trending': product_trending, # 'men': men, 'child': child
+        1, len(product_slider)), 'product_picked': product_picked, 'product_trending': product_trending, 'deal': deal, # 'men': men, 'child': child
                }
     return render(request, 'eshop/home.html', context)
 
-def off(request, id):
-    category = Offer.objects.get(id=id)
-    print(category.category.title)
-    return HttpResponse("Hello")
-    # offer.products.price = 
+def deals(request, slug):
+    product = Product.objects.filter(dealActive=True, dealSlug = slug)
+    return HttpResponse(product)
 
 def aboutus(request):
     return HttpResponse('About Us')
