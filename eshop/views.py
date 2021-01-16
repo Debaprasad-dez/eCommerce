@@ -29,6 +29,12 @@ def index(request):
                }
     return render(request, 'eshop/home.html', context)
 
+def off(request, id):
+    category = Offer.objects.get(id=id)
+    print(category.category.title)
+    return HttpResponse("Hello")
+    # offer.products.price = 
+
 def aboutus(request):
     return HttpResponse('About Us')
 
