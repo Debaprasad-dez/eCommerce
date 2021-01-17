@@ -131,9 +131,9 @@ def orderproduct(request):
     total = 0
     for rs in shopcart:
         if rs.product.variant == 'None':
-            total += rs.product.price * rs.quantity
+            total += float(rs.product.price * rs.quantity)
         else:
-            total += rs.variant.price * rs.quantity
+            total += float(rs.variant.price * rs.quantity)
             
     if request.method == 'POST':  # if there is a post
         form = OrderForm(request.POST)
@@ -199,10 +199,10 @@ def orderproduct(request):
                 detail.quantity = rs.quantity
                 # detail.price = rs.product.price
                 if rs.product.variant == 'None':
-                    detail.price    = rs.product.price
+                    detail.price    = float(rs.product.price)
                 else:
                     detail.price = rs.variant.price
-                detail.variant_id   = rs.variant_id
+                detail.variant_id   = float(rs.variant_id)
                 detail.amount = rs.amount
                 detail.save()
                 # ***Reduce quantity of sold product from Amount of Product
