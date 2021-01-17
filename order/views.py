@@ -10,7 +10,7 @@ from django.conf import settings
 from paywix.payu import Payu
 from django.views.decorators.csrf import csrf_exempt
 from product.models import *
-
+from decimal import Decimal
 
 MERCHANT_KEY = '7RMI_B8Qxc43LG2S'
 payu_config = settings.PAYU_CONFIG
@@ -69,10 +69,12 @@ def addtoshopcart(request, id):
                 data.quantity += form.cleaned_data['quantity']
                 data.save()  # save data
             else:  # Inser to Shopcart
+                print(product.variant)
                 data = ShopCart()
                 data.user_id = current_user.id
                 data.product_id = id
-                data.variant_id = variantid
+                if not product.variant == 'None':
+                    data.variant_id = variantid
                 data.quantity = form.cleaned_data['quantity']
                 data.save()
         else:
@@ -104,9 +106,9 @@ def shopcart(request):
     total = 0
     for rs in shopcart:
         if rs.product.variant == 'None':
-            total += rs.product.price * rs.quantity
+            total += float(rs.product.price * rs.quantity)
         else:
-            total += rs.variant.price * rs.quantity
+            total += float(rs.variant.price * rs.quantity)
             
     # return HttpResponse(str(total))
     context = {'shopcart': shopcart,

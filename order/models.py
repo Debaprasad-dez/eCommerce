@@ -44,7 +44,6 @@ class WishList(models.Model):
     def price(self):
         return (self.product.price)
 
-
 class WishListForm(ModelForm):
     class Meta:
         model = WishList
