@@ -199,10 +199,10 @@ def orderproduct(request):
                 detail.quantity = rs.quantity
                 # detail.price = rs.product.price
                 if rs.product.variant == 'None':
-                    detail.price    = float(rs.product.price)
+                    detail.price = float(rs.product.price)
                 else:
-                    detail.price = rs.variant.price
-                detail.variant_id   = float(rs.variant_id)
+                    detail.price = float(rs.variant.price)
+                detail.variant_id   = rs.variant_id
                 detail.amount = rs.amount
                 detail.save()
                 # ***Reduce quantity of sold product from Amount of Product
