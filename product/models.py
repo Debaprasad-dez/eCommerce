@@ -27,6 +27,10 @@ class Category(MPTTModel):
     slug = models.SlugField(null=True, unique=True)
     create_at = models.DateField(auto_now_add=True)
     update_at = models.DateField(auto_now=True)
+    feature = models.BooleanField(default=False)
+    featimage = models.ImageField(upload_to='Carousel/', null=True)
+    deal = models.BooleanField(default=False)
+    minimum_Offer = models.IntegerField(default=0)
 
     class Meta:
         verbose_name_plural = "Categories"
@@ -48,7 +52,6 @@ class Category(MPTTModel):
             full_path.append(k.title)
             k = k.parent
         return ' / '.join(full_path[::-1])
-
 
 class Product(models.Model):
     STATUS = (
@@ -128,7 +131,6 @@ class Product(models.Model):
         return math.ceil((((self.prevprice - self.price)*100/self.prevprice) / 1000) * 1000)
 
     image_tag.short_description = 'Image'
-
 
 class Deal(models.Model):
     CHOICES = (

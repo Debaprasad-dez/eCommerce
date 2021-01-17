@@ -8,6 +8,7 @@ urlpatterns = [
     path('deals/<str:slug>', views.deals, name="deals"),
     path('contact/', views.contactus, name="contact"),
     path('category/<int:id>/<slug:slug>', views.category_products, name="category_product"),
+    path('special-deals/<int:id>/<slug:slug>', views.category_offer, name="category_offer"),
     path('search/', views.search, name='search'),
     path('search_auto/', views.search_auto, name='search_auto'),
     path('ajaxcolor/', views.ajaxcolor, name='ajaxcolor'),

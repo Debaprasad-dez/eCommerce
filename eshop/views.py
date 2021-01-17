@@ -8,7 +8,8 @@ import json
 from .models import *
 from product.models import *
 from .forms import *
-
+from django.db.models import Q
+import math
 # Create your views here.
 page = 1
 
@@ -19,7 +20,7 @@ def index(request):
     # men = Category.objects.get(title = 'Men')
     # child = men.get_children()
     deal = Deal.objects.filter(active=True)
-    product_slider = Product.objects.all().order_by('-id')[:10]
+    product_slider = Category.objects.filter(feature = True)
     product_picked = Product.objects.all().filter(
         featured=True).order_by('-id')[:4]
     product_trending = Product.objects.all().order_by('?')[:12]
@@ -32,8 +33,14 @@ def index(request):
     return render(request, 'eshop/home.html', context)
 
 def deals(request, slug):
+    deal = Deal.objects.get(active = True, dealSlug = slug)
     product = Product.objects.filter(dealActive=True, dealSlug = slug)
-    return HttpResponse(product)
+    context = {
+        'deal': deal,
+        'products': product,
+        'len': len(product)
+    }
+    return render(request, 'eshop/deals.html', context)
 
 def aboutus(request):
     return HttpResponse('About Us')
@@ -80,6 +87,20 @@ def category_products(request, id, slug):
                }
 
     return render(request, 'eshop/category_products.html', context)
+
+
+def category_offer(request, id, slug):
+    catdata = Category.objects.get(pk=id)
+    products = Product.objects.filter(Q(category__parent_id=id) | Q(category_id=id))
+        
+    context = {
+               'products': products,
+               'catdata': catdata,
+               }
+    for i in products:
+        print(i.offer>=catdata.minimum_Offer)
+    return render(request, 'eshop/category_offers.html', context)
+
 
 def search(request):
     if request.method == 'POST':  # check post

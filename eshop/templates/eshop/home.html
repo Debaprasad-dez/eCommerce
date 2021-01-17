@@ -15,8 +15,8 @@ Home
         <div class="carousel-inner">
             {% for item in product_slider %}
             <div class="carousel-item {% if forloop.counter == 1 %} active {% endif %}">
-                <a href="/product/{{ item.id }}/{{ item.slug }}">
-                    <img class="d-block w-100" style="border-radius: 10px !important;" src="{{ item.image.url }}"
+                <a href="{% url 'category_offer' item.id item.slug %}">
+                    <img class="d-block w-100" style="border-radius: 10px !important;" src="{{ item.featimage.url }}"
                         alt="First slide">
                 </a>
             </div>
