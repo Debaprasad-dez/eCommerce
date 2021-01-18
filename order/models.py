@@ -55,7 +55,7 @@ class Order(models.Model):
         ('Accepted', 'Accepted'),
         ('Preparing', 'Preparing'),
         ('On Shipping', 'On Shipping'),
-        ('Completed', 'Completed'),
+        ('Delivered', 'Delivered'),
         ('Canceled', 'Canceled'),
         ('Return Requested', 'Return Requested'),
         ('Returned', 'Returned'),
@@ -82,7 +82,7 @@ class Order(models.Model):
     ip = models.CharField(blank=True, max_length=20)
     adminnote = models.CharField(blank=True, max_length=100)
     delivery_date=models.DateTimeField(auto_now_add=False, null=True, blank=True)
-    daysadded = models.IntegerField(null=True, blank=True)
+    return_before_date=models.DateTimeField(auto_now_add=False, null=True, blank=True)
     create_at=models.DateTimeField(auto_now_add=True)
     update_at=models.DateTimeField(auto_now=True)
     paid = models.BooleanField(default=False)

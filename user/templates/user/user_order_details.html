@@ -56,8 +56,8 @@
                         </tr>
 
                         <tr>
-                            <th class="text-left">Date</th>
-                            <td class="text-left">{{ order.create_at|date:"M d, Y" }} {{ order.create_at|time:"H:i:s" }}</td>
+                            <th class="text-left">Order Date</th>
+                            <td class="text-left">{{ order.create_at }}</td>
                         </tr>
                         {% if order.status == 'On Shipping' %}
                         <tr>
@@ -74,15 +74,59 @@
                         </tr>
                         {% endif %}
 
+                        {% if order.status == 'Delivered' %}
+                        <tr>
+                            <th class="text-left">Delivery Date</th>
+                            <td class="text-left">
+                                {{ order.delivery_date }}</td>
+                        </tr>
+                        {% endif %}
+
                     </table>
-                    {% if order.status != 'Completed' %} 
+                    {% if order.status != 'Delivered' %} 
                         {% if order.status != "Canceled" and order.status != 'Return Requested' and order.status != 'Returned' %}
                             <a href="{% url 'cancelorder' order.id %}" class="btn btn-sm btn-danger">Cancel your order</a>
                         {% endif %}
                     {% else %}
-                    <a href="{% url 'returnorder' order.id %}" class="btn btn-sm btn-danger">Return</a>
+                    <a id="demo" href="{% url 'returnorder' order.id %}" class="btn btn-sm btn-danger">Return</a>
+                    <p class="mt-2 mx-3" id="para"></p>
+
                     {% endif %}
 
+                    <script>
+                        // Set the date we're counting down to
+                        var countDownDate = new Date('{{ order.return_before_date|date:"M d, Y" }} {{ order.return_before_date|time:"H:i:s" }}').getTime();
+                
+                        // Update the count down every 1 second
+                        var x = setInterval(function () {
+                
+                            // Get today's date and time
+                            var now = new Date().getTime();
+                
+                            // Find the distance between now and the count down date
+                            var distance = countDownDate - now;
+                
+                            // Time calculations for days, hours, minutes and seconds
+                            var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                
+                            // Output the result in an element with id="para"
+                            document.getElementById("para").innerHTML = 
+                            "<span>No return request after</span> <strong>" + days +
+                                "</strong> <small classname={}>days</small> <strong>" + hours +
+                                    "</strong> <small>hours</small> <strong>" +
+                                    minutes + "</strong> <small>minutes</small> <strong>" + seconds +
+                                    "</strong> <small>seconds</small>";
+                            // If the count down is over, write some text 
+                            if (distance < 0) {
+                                clearInterval(x);
+                                document.getElementById("para").style.display = "none";
+                                document.getElementById("demo").style.display = "none";
+                            }
+                        }, 0);
+                    </script>
 
                     <div class="section-title">
                         <h4 class="title">Order Item List</h4>
