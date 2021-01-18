@@ -75,6 +75,14 @@
                         {% endif %}
 
                     </table>
+                    {% if order.status != 'Completed' %} 
+                        {% if order.status != "Canceled" and order.status != 'Return Requested' and order.status != 'Returned' %}
+                            <a href="{% url 'cancelorder' order.id %}" class="btn btn-sm btn-danger">Cancel your order</a>
+                        {% endif %}
+                    {% else %}
+                    <a href="{% url 'returnorder' order.id %}" class="btn btn-sm btn-danger">Return</a>
+                    {% endif %}
+
 
                     <div class="section-title">
                         <h4 class="title">Order Item List</h4>

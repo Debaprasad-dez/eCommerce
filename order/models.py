@@ -57,7 +57,14 @@ class Order(models.Model):
         ('On Shipping', 'On Shipping'),
         ('Completed', 'Completed'),
         ('Canceled', 'Canceled'),
+        ('Return Requested', 'Return Requested'),
+        ('Returned', 'Returned'),
     )
+    CHOICES = (
+        ('COD', 'COD'),
+        ('PREPAY', 'PREPAY'),
+    )
+    mode = models.CharField(max_length=10, choices=CHOICES, null=True)
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     code = models.CharField(max_length=5, editable=False )
     key = models.CharField(max_length=5, editable=False, null=True, blank=True )
@@ -74,6 +81,7 @@ class Order(models.Model):
     status=models.CharField(max_length=50,choices=STATUS,default='New')
     ip = models.CharField(blank=True, max_length=20)
     adminnote = models.CharField(blank=True, max_length=100)
+    delivery_date=models.DateTimeField(auto_now_add=False, null=True, blank=True)
     create_at=models.DateTimeField(auto_now_add=True)
     update_at=models.DateTimeField(auto_now=True)
     paid = models.BooleanField(default=False)

@@ -87,10 +87,13 @@ def shopcart(request):
     # shipping > ZIP 799000 to 799250 shipping = 0;
     total = 0
     for rs in shopcart:
-        if rs.product.variant == 'None':
-            total += float(rs.product.price * rs.quantity)
-        else:
-            total += float(rs.variant.price * rs.quantity)
+        print(rs.price)
+        total += float(rs.product.price * rs.quantity)
+        
+        # if rs.variant is 'None':
+        #     total += float(rs.product.price * rs.quantity)
+        # else:
+        #     total += float(rs.product.variant.price * rs.quantity)
             
     # return HttpResponse(str(total))
     context = {'shopcart': shopcart,
@@ -122,6 +125,7 @@ def orderproduct(request):
         if form.is_valid():
             order = Order()
             order.key = request.user.id
+            order.mode = 'PREPAY'
             order.first_name = form.cleaned_data['first_name']
             order.last_name = form.cleaned_data['last_name']
             order.address = form.cleaned_data['address']
@@ -315,15 +319,16 @@ def cashondelivery(request):
     total = 0
     for rs in shopcart:
         if rs.product.variant == 'None':
-            total += rs.product.price * rs.quantity
+            total += float(rs.product.price * rs.quantity)
         else:
-            total += rs.variant.price * rs.quantity
+            total += float(rs.variant.price * rs.quantity)
 
     if request.method == 'POST':  # if there is a post
         form = OrderForm(request.POST)
         #return HttpResponse(request.POST.items())
         if form.is_valid():
             data = Order()
+            data.mode = 'COD'
             data.first_name = form.cleaned_data['first_name'] #get product quantity from form
             data.last_name = form.cleaned_data['last_name']
             data.address = form.cleaned_data['address']
@@ -380,3 +385,17 @@ def cashondelivery(request):
                'profile': profile,
                }
     return render(request, 'order/order_form.html', context)
+
+def returnorder(request, id):
+    url = request.META.get('HTTP_REFERER')  # get last url
+    order = Order.objects.get(id = id)
+    order.status = 'Return Requested'
+    order.save()
+    return HttpResponseRedirect(url)
+
+def cancelorder(request, id):
+    url = request.META.get('HTTP_REFERER')  # get last url
+    order = Order.objects.get(id = id)
+    order.status = 'Canceled'
+    order.save()
+    return HttpResponseRedirect(url)
