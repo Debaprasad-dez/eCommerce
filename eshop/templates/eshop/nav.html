@@ -1,7 +1,7 @@
   <!--Navbar -->
   {% block style %}
   .ui-autocomplete{
-  margin-top: 100px !important;
+  margin-top: 150px !important;
   }
   {% endblock %}
 
@@ -24,15 +24,10 @@
 
   <nav class="mb-1 navbar navbar-expand-lg navbar-dark fixed-top bg-white">
     <div class="container">
-
       <a class="navbar-brand" href="/">
-
         <img style="width: 100px;" src="{% static 'images/buck_logo.png' %}" alt="">
       </a>
-
       <ul class="navbar-nav mr-auto">
-
-
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle bg- pl-0 py-0 " id="navbarDropdownMenuLink-333" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false">
@@ -65,7 +60,7 @@
                     alt="">
                 </div>
                 <div class="col-9 px-0 mx-0">
-                  <p class="w-100 p-0 m-0"><strong>Avijit Chandro</strong> </p>
+                  <p class="w-100 p-0 m-0"><strong>Avijit Chandra</strong> </p>
                   <p class="small p-0 m-0">MD</p>
                 </div>
               </div>
@@ -75,22 +70,25 @@
         </li>
       </ul>
 
+
+      <!--pc search start-->
       <div class=" px-0 mx-5 row w-100 " style="background-color: rgba(0, 128, 0, 0.13);border-radius: 10px;"
         id="peep2">
-        <form action="/search/" method="POST"> {% csrf_token %}
-          <input id="query" name="query" required class="col-11 w-100 px-2" type="text"
-            style="background-color: rgba(57, 148, 57, 0);border: none;height: 30px;border-radius: 10px;"
-            placeholder="Search">
-          <button style="border: none;background: none;" class=" " type="submit"><i
-              class="fa fa-search text-dark"></i></button>
-        </form>
+      <form action="/search/" method="POST"> {% csrf_token %}
+        <input id="query" name="query" required class="col-11 w-100 px-2" type="text"
+          style="background-color: rgba(57, 148, 57, 0);border: none;height: 30px;border-radius: 10px;"
+          placeholder="Search for your products here...">
+        <button style="border: none;background: none;" class=" " type="submit"><i
+            class="fa fa-search text-dark"></i></button>
+      </form>
       </div>
+      <!--pc search end-->
 
-      </div>
-      <button class="navbar-toggler mx-0" type="button" aria-controls="navbarSupportedContent-333" aria-expanded="false"
-        aria-label="Toggle navigation">
-        <a href="tel:+919612244591"><i class="fas fa-phone text-dark"></i></a>
+      <!--mobile icons start-->
+      <button class="navbar-toggler mx-0" type="button" aria-expanded="false" aria-label="Toggle navigation">
+        <a href=""><i class="fas fa-phone text-dark"></i></a>
       </button>
+
       {% if user.id is not None %}
       <button class="navbar-toggler mx-0" type="button" aria-controls="navbarSupportedContent-333" aria-expanded="false"
         aria-label="Toggle navigation">
@@ -99,11 +97,6 @@
       <button class="navbar-toggler mx-0" type="button" aria-controls="navbarSupportedContent-333" aria-expanded="false"
         aria-label="Toggle navigation">
         <a href="{% url 'shopcart' %}"><i class="fas fa-shopping-bag text-dark "></i></a>
-      </button>
-      <button class="navbar-toggler mx-0 text-dark" type="button" data-toggle="collapse"
-        data-target="#navbarSupportedContent-333" aria-controls="navbarSupportedContent-333" aria-expanded="false"
-        aria-label="Toggle navigation">
-        <i class="fas fa-bars text-dark"></i>
       </button>
       {% else %}
       <button class="navbar-toggler mx-0" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-333"
@@ -115,11 +108,18 @@
         <a href="{% url 'signup_form' %}"><i class="text-dark fa fa-registered" aria-hidden="true"></i></a>
       </button>
       {% endif %}
+      <button class="navbar-toggler mx-0 text-dark" type="button" data-toggle="collapse"
+        data-target="#navbarSupportedContent-333" aria-controls="navbarSupportedContent-333" aria-expanded="false"
+        aria-label="Toggle navigation">
+        <i class="fas fa-bars text-dark"></i>
+      </button>
+      <!--mobile icons end-->
 
       <div class="collapse navbar-collapse" id="navbarSupportedContent-333">
         <div class="container text-center" id="peep">
           <div class="w-100 text-center" style="height: auto;">
             <br>
+            <!--mobile search start-->
             <form action="/search/" method="POST"> {% csrf_token %}
               <input required id="query" name="query" class="w-100 px-2" type="text"
                 style="background-color: rgba(0, 128, 0, 0.13);border: none;height: 40px;border-radius: 10px;"
@@ -127,6 +127,7 @@
               <button style="border: none;" class="my-3 bg-primary text-white px-4 py-2 rounded-pill"
                 type="submit">Search</button>
             </form>
+            <!--mobile search end-->
             <br>
             <br>
             {% if user.id is not None %}
@@ -135,47 +136,45 @@
             <p class="py-0 my-0"><span><i class="fas fa-envelope text-dark"></i></span> {{ user.email }}</p>
             <!-- <p class="py-1 my-0"><i class="fas fa-phone text-dark"></i><strong> 7005657875</strong></p> -->
             <br>
-            <a href="{% url 'user_orders' %}">
-              <h4 class="mx-auto mb-3 bg-light py-3 rounded text-dark" style="font-weight: 500;">My orders</h4>
-            </a>
+            <div class="row">
+              <div class="col-6">
+                <a href="{% url 'user_orders' %}" class=" mb-3 bg-light py-2 px-3 rounded text-dark p">
+                  My orders
+                </a>
+              </div>
+              <div class="col-6">
+                <a href="{% url 'contact' %}"  class=" mb-3 bg-dark py-2 px-3 rounded text-light p">
+                  Sell with Us
+                </a>
+              </div>
+            </div>
             <br>
-            <a href="{% url 'contact' %}">
-              <h4 class="mx-auto mb-3 bg-dark py-3 rounded text-white" style="font-weight: 500;">Sell with Us</h4>
-            </a>
             <br>
-            <a href="{% url 'logout_func' %}">
-              <h4 class="mx-auto mb-3 bg-light py-3 rounded text-dark" style="font-weight: 500;">Log-out</h4>
+            <a href="{% url 'logout_func' %}"  class=" mb-3 bg-light py-2 px-3 rounded text-dark p">
+              Log-out
             </a>
             {% endif %}
+
+            <br><br>
             <p>Buckler inc.</p>
 
           </div>
         </div>
       </div>
-      <a class="mx-4" href="tel:+919612244591" id="peep2">
+      <!--pc icons start-->
+      <a class="mx-4" href="tel:+" id="peep2">
         <i class="fas fa-phone text-dark"></i>
       </a>
-      {% if user.id is not None %}
       <a class="mx-4" href="{% url 'wishlist' %}" id="peep2">
         <i class="far fa-heart text-dark"></i>
       </a>
       <a class="mx-4" href="{% url 'shopcart' %}" id="peep2">
         <i class="fas fa-shopping-bag text-dark"></i>
       </a>
-      <a class="mx-4 text-dark w-25" style="font-weight: 600;" href="{% url 'user_orders' %}" id="peep2">
+      <a class="mx-4 text-dark w-25" style="font-weight: 600;" href="" id="peep2">
         My Orders
       </a>
-      <a class="mx-4 text-dark w-25" style="font-weight: 600;" href="{% url 'logout_func' %}" id="peep2">
-        Log out
-      </a>
-      {% else %}
-      <a class="mx-4 text-dark w-25" style="font-weight: 600;" href="{% url 'login_form' %}" id="peep2">
-        Login
-      </a>
-      <a class="mx-4 text-dark w-25" style="font-weight: 600;" href="{% url 'signup_form' %}" id="peep2">
-        Register
-      </a>
-      {% endif %}
+      <!--pc icons end-->
     </div>
   </nav>
 
