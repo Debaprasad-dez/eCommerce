@@ -270,6 +270,7 @@ height: 1px !important;
                 </div>
             </div>
         </form>
+        
         {% else %}
         <form action="/order/addtoshopcart/{{ product.id }}" method="post"> {% csrf_token %}
             <p><strong>Availability:</strong> {% if product.amount > 0  %} In Stock {% else %} Out of Stock

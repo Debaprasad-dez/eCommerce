@@ -167,7 +167,7 @@ def product_detail(request,id,slug):
                         'variant': variant,'query': query
                         })
     # print(product.countreview())
-    return render(request,'eshop/product-page.html',context)
+    return render(request,'eshop/products.html',context)
 
 def ajaxcolor(request):
     data = {}
