@@ -75,27 +75,29 @@
         </li>
       </ul>
 
-      <div class=" px-5 row w-100" id="peep2">
+      <div class=" px-0 mx-5 row w-100 " style="background-color: rgba(0, 128, 0, 0.13);border-radius: 10px;"
+        id="peep2">
         <form action="/search/" method="POST"> {% csrf_token %}
-          <input id="query" name="query" required class=" px-2" type="text"
-            style="background-color: rgba(0, 128, 0, 0.13);border: none;height: 40px;border-radius: 10px;"
-            placeholder="search">
-          <button style="border: none;" class="col-2my-3 bg-primary text-white px-4 py-2 rounded-pill"
-            type="submit">Search</button>
+          <input id="query" name="query" required class="col-11 w-100 px-2" type="text"
+            style="background-color: rgba(57, 148, 57, 0);border: none;height: 30px;border-radius: 10px;"
+            placeholder="Search">
+          <button style="border: none;background: none;" class=" " type="submit"><i
+              class="fa fa-search text-dark"></i></button>
         </form>
+      </div>
 
       </div>
-      <button class="navbar-toggler mx-0" type="button" 
-        aria-controls="navbarSupportedContent-333" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler mx-0" type="button" aria-controls="navbarSupportedContent-333" aria-expanded="false"
+        aria-label="Toggle navigation">
         <a href="tel:+919612244591"><i class="fas fa-phone text-dark"></i></a>
       </button>
       {% if user.id is not None %}
-      <button class="navbar-toggler mx-0" type="button" 
-        aria-controls="navbarSupportedContent-333" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler mx-0" type="button" aria-controls="navbarSupportedContent-333" aria-expanded="false"
+        aria-label="Toggle navigation">
         <a href="{% url 'wishlist' %}"><i class="far fa-heart text-dark"></i></a>
       </button>
-      <button class="navbar-toggler mx-0" type="button" 
-        aria-controls="navbarSupportedContent-333" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler mx-0" type="button" aria-controls="navbarSupportedContent-333" aria-expanded="false"
+        aria-label="Toggle navigation">
         <a href="{% url 'shopcart' %}"><i class="fas fa-shopping-bag text-dark "></i></a>
       </button>
       <button class="navbar-toggler mx-0 text-dark" type="button" data-toggle="collapse"
@@ -172,7 +174,7 @@
       </a>
       <a class="mx-4 text-dark w-25" style="font-weight: 600;" href="{% url 'signup_form' %}" id="peep2">
         Register
-      </a> 
+      </a>
       {% endif %}
     </div>
   </nav>
