@@ -93,7 +93,7 @@ def shopcart(request):
         if rs.variant is 'None':
             total += float(rs.product.price * rs.quantity)
         else:
-            total += float(rs.product.variant.price * rs.quantity)
+            total += float(rs.variant.price * rs.quantity)
             
     # return HttpResponse(str(total))
     context = {'shopcart': shopcart,
