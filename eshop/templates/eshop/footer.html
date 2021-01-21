@@ -3,35 +3,38 @@
     <div class="row">
         <div class="col-6 text-white p-2 pl-3">
             <h4><strong>Missed Something?</strong></h4>
-            <a class="py-0 my-0">Summerwear</a>
+            <!-- {% for item in category %}
+            {% if item.is_root_node %}
+            <div class="col-4 mx-auto my-3">
+                <a class="text-white" href="{% url 'category_product' item.id item.slug %}">
+                    <a class="text-white py-0 my-0 text-white">Men</a>
+                </a>
+            </div>
+            {% endif %}
+            {% endfor %} -->
+            <a class="py-0 my-0 text-white">Men</a>
             <br>
-            <a class="py-0 my-0">Winterwear</a>
+            <a class="py-0 my-0 text-white">Women</a>
             <br>
-            <a class="py-0 my-0">Ethnic</a>
+            <a class="py-0 my-0 text-white">kids</a>
             <br>
-            <a class="py-0 my-0">Sports</a>
+            <a class="py-0 my-0 text-white">Electronics</a>
             <br>
-            <a class="py-0 my-0">Casual</a>
+            <a class="py-0 my-0 text-white">Groceries</a>
             <br>
-            <a class="py-0 my-0">Formal</a>
-            <br>
-            <a class="py-0 my-0">Electronics</a>
-            <br>
-            <a class="py-0 my-0">Groceries</a>
+            <a class="text-white" href="{% url 'contact' %}">
+                <h4 class=" my-3"><strong>Sell With Us</strong></h4>
+            </a>
         </div>
         <div class="col-6">
             <h4 class="text-white"><strong>Reach Us</strong></h4>
             <div class="bg-white p-2 mb-2 rounded">
-                <h5><strong>Office Address</strong></h5>
-                <p class="small">Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates maxime minima,
-                    minus
-                    nesciunt unde eos!</p>
+                <h5 class="mb-0"><strong class="small">Office Address</strong></h5>
+                <p class="small mb-0 pb-0 text-left"> elit. Voluptates maxime minima, minus nesciunt</p>
             </div>
-            <div class="bg-white p-2 rounded">
-                <h5><strong>Mailing Address</strong></h5>
-                <p class="small">Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates maxime minima,
-                    minus
-                    nesciunt unde eos!</p>
+            <div class="bg-white p-2 pb-0 rounded">
+                <h5 class="mb-0"><strong class="small">Mailing Address</strong></h5>
+                <p class="small mb-0 pb-0 text-left">Lorem ipsum dolor sit amet consectetur adipisicing </p>
             </div>
         </div>
     </div>
@@ -41,28 +44,32 @@
 <div class="container">
 
     <div class="row  mx-0 px-0">
-        <div class="col-md-4"></div>
-        <div class="col-md-4  mx-0 px-0">
-            <div class="row mx-0 px-0">
-                <div class="col-4 text-center">
-                    <i class="fab fa-facebook fa-3x text-primary"></i>
+        <div class="col-md-6  mx-auto">
+            <div class="row mx-0 px-auto">
+                <div class="col-2 mx-auto text-center">
+                    <i class="fab fa-facebook fa-2x text-primary"></i>
                 </div>
-                <div class="col-4 text-center">
-                    <i class="fab fa-twitter fa-3x text-default"></i>
+                <div class="col-2 mx-auto text-center">
+                    <i class="fab fa-twitter fa-2x text-default"></i>
                 </div>
-                <div class="col-4 text-center">
-                    <i class="fab fa-instagram fa-3x text-secondary"></i>
+                <div class="col-2 mx-auto text-center">
+                    <i class="fab fa-instagram fa-2x text-secondary"></i>
+                </div>
+                <div class="col-2 mx-auto text-center">
+                    <i class="fab fa-youtube fa-2x text-danger"></i>
+                </div>
+                <div class="col-2 mx-auto text-center">
+                    <i class="fab fa-whatsapp fa-2x text-success"></i>
                 </div>
             </div>
         </div>
-        <div class="col-md-4"></div>
     </div>
 </div>
 <br>
 <div class="container text-center my-2">
-    <a class="bg-dark text-white px-5 py-2 rounded-pill" href="{% url 'logout_func' %}">Logout</a>
+    <a href="{% url 'logout_func' %}" class="bg-dark text-white px-5 py-2 rounded-pill" href="">Logout</a>
 </div>
 <br>
-<div class="container text-center text-white bg-dark mb-0">
+<div class=" text-center text-white bg-dark mb-0">
     <p class="mb-0 py-2">copyright @Buckler 2021</p>
 </div>
