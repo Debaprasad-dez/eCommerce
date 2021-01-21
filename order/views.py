@@ -87,13 +87,13 @@ def shopcart(request):
     # shipping > ZIP 799000 to 799250 shipping = 0;
     total = 0
     for rs in shopcart:
-        print(rs.price)
-        total += float(rs.product.price * rs.quantity)
+#         print(rs.price)
+#         total += float(rs.product.price * rs.quantity)
         
-        # if rs.variant is 'None':
-        #     total += float(rs.product.price * rs.quantity)
-        # else:
-        #     total += float(rs.product.variant.price * rs.quantity)
+        if rs.variant is 'None':
+            total += float(rs.product.price * rs.quantity)
+        else:
+            total += float(rs.product.variant.price * rs.quantity)
             
     # return HttpResponse(str(total))
     context = {'shopcart': shopcart,
