@@ -77,6 +77,7 @@ class Product(models.Model):
     brand_name = models.CharField(max_length=50)
     title = models.CharField(max_length=150)
     keywords = models.TextField()
+    assured = models.BooleanField(default=False, null=True)
     description = models.TextField()
     image = models.ImageField(upload_to='images/', blank=True)
     prevprice = models.FloatField()

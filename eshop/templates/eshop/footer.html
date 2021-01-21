@@ -3,16 +3,17 @@
     <div class="row">
         <div class="col-6 text-white p-2 pl-3">
             <h4><strong>Missed Something?</strong></h4>
-            <!-- {% for item in category %}
+            {% load myapptags %}
+            {% categorylist as category %}
+            {% for item in category %}
             {% if item.is_root_node %}
-            <div class="col-4 mx-auto my-3">
-                <a class="text-white" href="{% url 'category_product' item.id item.slug %}">
-                    <a class="text-white py-0 my-0 text-white">Men</a>
-                </a>
+            <div class="col-4 my-1">
+                <a href="{% url 'category_product' item.id item.slug %}"
+                    class="text-white py-0 my-0 text-white">{{ item.title }}</a>
             </div>
             {% endif %}
-            {% endfor %} -->
-            <a class="py-0 my-0 text-white">Men</a>
+            {% endfor %}
+            <!-- <a class="py-0 my-0 text-white">Men</a>
             <br>
             <a class="py-0 my-0 text-white">Women</a>
             <br>
@@ -20,10 +21,10 @@
             <br>
             <a class="py-0 my-0 text-white">Electronics</a>
             <br>
-            <a class="py-0 my-0 text-white">Groceries</a>
+            <a class="py-0 my-0 text-white">Groceries</a> -->
             <br>
             <a class="text-white" href="{% url 'contact' %}">
-                <h4 class=" my-3"><strong>Sell With Us</strong></h4>
+                <h4 class=""><strong>Sell With Us!</strong></h4>
             </a>
         </div>
         <div class="col-6">
