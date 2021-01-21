@@ -4,7 +4,7 @@
 Home
 {% endblock %}
 {% block body %}
-<div class="container">
+<div class="">
     <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
             <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
@@ -41,11 +41,19 @@ Home
     <div class="row">
         {% for item in category %}
         {% if item.is_root_node %}
+        {% if item.status != 'False' %}
         <div class="col-4 mx-auto my-3">
             <a href="{% url 'category_product' item.id item.slug %}">
                 <img class="w-100" id="catbox" src="{{ item.image.url }}" alt="">
             </a>
         </div>
+        {% else %}
+        <div class="col-4 mx-auto my-3">
+            <a style="pointer-events: none; cursor: default;" href="#">
+                <img class="w-100" id="catbox" src="{{ item.image.url }}" alt="">
+            </a>
+        </div>  
+        {% endif %}
         {% endif %}
         {% endfor %}
     </div>
@@ -59,13 +67,13 @@ Home
     <a href="{% url 'deals' item.dealSlug %}">
         <img id="{{ item.onlyChar2 }}" class="w-100" src="{{ item.image.url }}" alt=""></a>
     <style>
-        #{{ item.onlyChar1 }
-        }
-
-            {
-            text-align: center;
-            font-size: 16px;
-            margin-top: 0px;
+        #{{ item.onlyChar1 }}
+        {
+          text-align: center;
+          font-size: 16px;
+          margin-top: 0px;
+          border-radius: 15px;
+          border: solid 3px black;
         }
     </style>
     <p class="mt-2" id="{{ item.onlyChar1 }}"></p>
@@ -89,18 +97,14 @@ Home
             var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
             // Output the result in an element with id="{{ item.onlyChar1 }}"
-            document.getElementById("{{ item.onlyChar1 }}").innerHTML = {
-                %
-                if item.deal == 'Deal of the month'
-                or item.deal == 'Deal of the week' %
-            }
+            document.getElementById("{{ item.onlyChar1 }}").innerHTML = 
+            {% if item.deal == 'Deal of the month' or item.deal == 'Deal of the week' %}
             "<strong>" + days +
                 "</strong> <small classname={}>days</small> <strong>" + hours +
                 "</strong> <small>hours</small> <strong>" +
                 minutes + "</strong> <small>minutes</small> <strong>" + seconds +
-                "</strong> <small>seconds</small> left! Hurry"; {
-                % endif %
-            }
+                "</strong> <small>seconds</small> left! Hurry"; 
+                {% endif %}
             "<strong>" + hours +
                 "</strong> <small>hours</small> <strong>" +
                 minutes + "</strong> <small>minutes</small> <strong>" + seconds +

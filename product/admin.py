@@ -60,8 +60,9 @@ class ProductVariantsInline(admin.TabularInline):
 
 class ProductAdmin(admin.ModelAdmin):
     list_display = ['title', 'category', 'status', 'image_tag']
-    list_filter = ['category']
+    list_filter = ['category', 'status', ]
     readonly_fields = ('image_tag',)
+    search_fields = ['title', 'category',]
     inlines = [ProductImageInline, ProductVariantsInline ]
     prepopulated_fields = {'slug': ('title',), 'dealSlug': ('deals',)}
     

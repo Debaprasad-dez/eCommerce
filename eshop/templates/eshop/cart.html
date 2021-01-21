@@ -70,7 +70,7 @@ Cart
             <div class="row">
                 <div class="col-4">
                     <a href="/product/{{ item.product.id }}/{{ item.product.slug }}"><img class="w-100 mb-2"
-                            src="{{ item.product.image.url }}" alt=""></a>
+                        {% if item.variant.image_id  > 0 %} src="{{ item.variant.image }}" {% else %} src="{{ item.product.image.url }}" {% endif %} alt=""></a>
                     <div class="row p-0 m-0">
                         <a href="/order/deletefromcart/{{ item.id }}" onclick="return confirm('Delete! Are you sure?')"
                             class="w-100 mt-2 border text-white rounded small py-1 text-center"
@@ -80,7 +80,9 @@ Cart
                 <div class="col-8">
                     <p class="my-0 py-0"><strong>{{ item.product.brand_name }}</strong></p>
                     <p class="my-0 py-0 mb-2">{{ item.product.title }}</p>
-                    <a class="bg-dark mr-2 px-2 py-1 text-white rounded" href="">Size: L</a>
+                    {% if item.variant != 'None' %}
+                    <a class="bg-dark mr-2 px-2 py-1 text-white rounded" href="">{{ item.variant.title }}</a>
+                    {% endif %}
                     <a class="bg-dark mr-2 px-2 py-1 text-white rounded" href="">Qty: {{ item.quantity }}</a>
                     <br>
                     <br>
