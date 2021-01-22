@@ -324,6 +324,7 @@ def cashondelivery(request):
             data.last_name = form.cleaned_data['last_name']
             data.address = form.cleaned_data['address']
             data.city = form.cleaned_data['city']
+            data.state = form.cleaned_data['state']
             data.ZIP = form.cleaned_data['ZIP']
             data.country = form.cleaned_data['country']
             data.phone = form.cleaned_data['phone']
