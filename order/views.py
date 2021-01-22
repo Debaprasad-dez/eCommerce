@@ -91,7 +91,7 @@ def shopcart(request):
              'category':category,
              'total': total,
              }
-    return render(request,'eshop/cart.html',context)
+    return render(request,'eshop/shopcart.html',context)
 
 @login_required(login_url='/user/login')  # Check login
 def deletefromcart(request, id):

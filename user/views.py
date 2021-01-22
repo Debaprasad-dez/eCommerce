@@ -176,7 +176,7 @@ def user_password(request):
 def user_orders(request):
     #category = Category.objects.all()
     current_user = request.user
-    orders=Order.objects.filter(user_id=current_user.id)
+    orders=Order.objects.filter(user_id=current_user.id).order_by('-id')
     context = {#'category': category,
                'orders': orders,
                }
