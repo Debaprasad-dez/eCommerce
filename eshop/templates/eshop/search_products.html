@@ -7,7 +7,7 @@
 <div class="container text-left my-1">
 	<a style="border-radius: 5px;font-weight: 400;" class="text-dark  px-3 py-1 small disabled" href="">
 		<h3>Search for {{ query }}</h3>
-		<p>{{ len }} Products</p>
+		<p>{{ len }} Product{% if len > 1 %}s{% endif %}</p>
 	</a>
 </div>
 <div class="container">

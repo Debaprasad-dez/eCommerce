@@ -120,7 +120,7 @@ def search(request):
                             request, "No search results found. Please refine your search!")
             category = Category.objects.all()
             context = {'products': products, 'query': query,
-                       'category': category, 'len': len(category) }
+                       'category': category, 'len': len(products) }
             return render(request, 'eshop/search_products.html', context)
     return HttpResponseRedirect('/')
 
