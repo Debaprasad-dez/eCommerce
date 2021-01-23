@@ -18,12 +18,12 @@ class SignUpForm(UserCreationForm):
         
     def __init__(self, *args, **kwargs):
         super(SignUpForm, self).__init__(*args, **kwargs)
-        self.fields["username"].widget.attrs = {"class": "w-100 py-2 border pl-3 rounded-pill my-2", "placeholder": "Username"}
-        self.fields["first_name"].widget.attrs = {"class": "w-100 py-2 border pl-3 rounded-pill my-2", "placeholder": "First Name"}
-        self.fields["last_name"].widget.attrs = {"class": "w-100 py-2 border pl-3 rounded-pill my-2", "placeholder": "Last Name"}
-        self.fields["email"].widget.attrs = {"class": "w-100 py-2 border pl-3 rounded-pill my-2", "placeholder": "Email"}
-        self.fields["password1"].widget.attrs = {"class": "w-100 py-2 border pl-3 rounded-pill my-2", "placeholder": "Enter Password"}
-        self.fields["password2"].widget.attrs = {"class": "w-100 py-2 border pl-3 rounded-pill my-2", "placeholder": "Confirm Password"}
+        self.fields["username"].widget.attrs = {"class": "form-control rounded-pill", "placeholder": "Username", "aria-label": "Username", "aria-describedby": "basic-addon1" }
+        self.fields["first_name"].widget.attrs = {"class": "form-control rounded-pill", "placeholder": "First Name", "aria-label": "First Name", "aria-describedby": "basic-addon1"}
+        self.fields["last_name"].widget.attrs = {"class": "form-control rounded-pill", "placeholder": "Last Name", "aria-label": "Last Name", "aria-describedby": "basic-addon1"}
+        self.fields["email"].widget.attrs = {"class": "form-control rounded-pill", "placeholder": "Email", "aria-label": "Email", "aria-describedby": "basic-addon1"}
+        self.fields["password1"].widget.attrs = {"class": "form-control rounded-pill", "placeholder": "Enter Password", "aria-label": "Enter Password", "aria-describedby": "basic-addon1"}
+        self.fields["password2"].widget.attrs = {"class": "form-control rounded-pill", "placeholder": "Confirm Password", "aria-label": "Confirm Password", "aria-describedby": "basic-addon1"}
 class UserUpdateForm(UserChangeForm):
     class Meta:
         model = User
