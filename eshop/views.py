@@ -55,6 +55,10 @@ def contactus(request):
             data.email = form.cleaned_data['email']
             data.subject = form.cleaned_data['subject']
             data.message = form.cleaned_data['message']
+            data.phone = form.cleaned_data['phone']
+            data.address = form.cleaned_data['address']
+            data.brand_name = form.cleaned_data['brand_name']
+            data.deals_in = form.cleaned_data['deals_in']
             data.ip = request.META.get('REMOTE_ADDR')
             data.save()  # save data to table
             messages.success(

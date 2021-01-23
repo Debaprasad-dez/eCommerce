@@ -1,22 +1,18 @@
 {% extends 'eshop/base.html' %}
 {% load i18n %}
-{% block title %} Contact Us-{{ setting.title }} {% endblock %}
-{% block description %} {{ setting.description }} {% endblock %}
-{% block keywords %} {{ setting.keywords }} {% endblock %}
-
-{% block sidebar %} {% include 'sidebar.html' %} {% endblock %}
+{% block title %} Contact Us {% endblock %}
 
 {% block body %}
 
 <!-- BREADCRUMB -->
-<div id="breadcrumb">
+<!-- <div id="breadcrumb">
     <div class="container">
         <ul class="breadcrumb">
             <li><a href="{% url 'home' %}">{% trans "Home" %}</a></li>
             <li class="active">{% trans "Contact Page" %}</li>
         </ul>
     </div>
-</div>
+</div> -->
 <!-- /BREADCRUMB -->
 
 <!-- section -->
@@ -31,7 +27,7 @@
                 <div class="billing-details">
 
                     <div class="section-title">
-                        <h3 class="title">{% trans "Contact Form"%}</h3>
+                        <h3 class="title"><strong>{% trans "Sell With Us"%}</strong><hr></h3><br>
 
                         {% if messages %}
                         {% for message in messages %}
@@ -44,28 +40,34 @@
                     </div>
                     <form id="checkout-form" class="clearfix" method="post">
                         {% csrf_token %}
-                        {{ form.as_p }}
-                        <input type="submit" value="{% trans "SEND FORM" %}">
+                        {% for item in form %}
+                        {% if item.field.widget.input_type == 'checkbox' %}
+                        <label><strong>Items Dealing In</strong></label>
+                        <style>
+                            li {
+                                list-style-type: none;
+                            }
+                        </style>
+                        {% endif %}
+                        {{ item }}
+                        {% endfor %}
+                        <input class="bg-dark border py-2 px-3 mx-0 my-1 text-white rounded" name="" type="submit" value="{% trans "Send >>" %}">
                     </form>
                 </div>
-
+<br><br>
             </div>
 
-            <div class="col-md-8">
+            <div class="col-md-6">
                 <div class="shiping-methods">
                     <div class="section-title">
-                        <h3 class="title">{% trans "Contact Information"%}</h3>
+                        <h3 class="title text-right"><strong>{% trans "Contact Information"%}</strong><hr class="ml-5"></h3> <br>
                     </div>
-                    <div>
+                    <div class="text-right">
                         {{ setting.contact|safe }}
                     </div>
 
                 </div>
             </div>
-
-
-
-
         </div>
         <!-- /row -->
     </div>
@@ -73,5 +75,5 @@
 </div>
 <!-- /section -->
 
-
+<br><br>
 {% endblock %}

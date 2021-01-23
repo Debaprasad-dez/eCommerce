@@ -7,7 +7,7 @@ class SettingtAdmin(admin.ModelAdmin):
     
 class ContactMessageAdmin(admin.ModelAdmin):
     list_display = ['name','subject', 'update_at','status']
-    readonly_fields =('name','subject','email','message','ip')
+    readonly_fields =('name','subject','email','message','ip', 'phone', 'brand_name', 'address', 'deals_in')
     list_filter = ['status']
 
 admin.site.register(Setting, SettingtAdmin)
