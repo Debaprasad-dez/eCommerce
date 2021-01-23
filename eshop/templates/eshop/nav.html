@@ -84,10 +84,9 @@
         </form>
       </div>
       <!--pc search end-->
-
       <!--mobile icons start-->
       <button class="navbar-toggler mx-0" type="button" aria-expanded="false" aria-label="Toggle navigation">
-        <a href=""><i class="fas fa-phone text-dark"></i></a>
+        <a href="tel:{{ setting.phone }}"><i class="fas fa-phone text-dark"></i></a>
       </button>
       {% if user.id is not None %}
       {% wishlistcount user.id as wishlist %}
@@ -180,7 +179,7 @@
         </div>
       </div>
       <!--pc icons start-->
-      <a class="mx-4" href="tel:+" id="peep2">
+      <a class="mx-4" href="tel:{{ setting.phone }}" id="peep2">
         <i class="fas fa-phone text-dark"></i>
       </a>
       {% if user.id is None %}

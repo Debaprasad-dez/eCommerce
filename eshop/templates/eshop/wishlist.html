@@ -23,13 +23,13 @@ Wish List
                     </p>
                     <p class="p-0 m-0 small"><strong>{{ item.product.title }}</strong></p>
                     <p class="p-0 pb-2 m-0 small">
-                        <strong><i class="fas fa-rupee-sign"></i> {{ item.product.price }}</strong>
+                        <strong><i class="text-primary fas fa-rupee-sign"></i> {{ item.product.price }}</strong>
                     </p>
                     <a href="{% url 'deletefromlist' item.id %}" onclick="return confirm('Delete! Are you sure?')" class="px-3 py-1 small" style="
                 border-radius: 10px;
                 border: solid 2px rgb(255, 0, 0);
                 color: red;
-              ">REMOVE</a>
+              ">REMOVE</a> <br> <br>
                 </div>
             </div>
         </div>
