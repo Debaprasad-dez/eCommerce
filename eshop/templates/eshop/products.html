@@ -215,7 +215,7 @@ color: white;
       <form action="/order/addtoshopcart/{{ product.id }}" method="post"> {% csrf_token %}
         <p class="my-1"><strong>Quantity</strong></p>
         <input type="hidden" name="variantid" id="variantid" value="{{ variant.id }}">
-        <input class="mx-1 w-25" name="quantity" type="number" value="1" min="1" max="10" class="form-control w-25">
+        <input class="mx-1 w-25 form-control" name="quantity" type="number" value="1" min="1" max="10" class="form-control w-25">
         <div class="row p-0">
           <div class="col-6 my-2">
             <button type="submit" class="my-2 w-100 text-light bg-dark p-3 px-3 mx-0 rounded m-1"
@@ -229,18 +229,19 @@ color: white;
       </form>
 
       {% else %}
+
       <a class="disabled text-dark h2 mr-2" style="font-family: Roboto;">₹ {{ product.price }}</a>
       <a class="disabled text-muted h5 mr-2" style="font-family: Roboto;"><strike>₹ {{ product.prevprice }}</strike></a>
       <a class="disabled text-success p" href="">{{ product.offer|floatformat }}% off</a>
       <p class="my-1"><strong>Availability</strong></p>
-      <p class="text-success my-0 py-0">{% if product.quantity > 0  %} In Stock {% else %} Out of Stock
+      <p class="text-success my-0 py-0">{% if product.amount > 0  %} In Stock {% else %} Out of Stock
         {% endif %}</p>
       <form action="/order/addtoshopcart/{{ product.id }}" method="post"> {% csrf_token %}
         <p class="my-1"><strong>Quantity</strong></p>
-        <input class="mx-1 w-25" name="quantity" type="number" value="1" min="1" max="10" class="form-control w-25">
+        <input class="mx-1 w-25 form-control" name="quantity" type="number" value="1" min="1" max="10" class="form-control w-25">
         <div class="row p-0">
           <div class="col-6 my-2">
-            <button type="submit" class="my-2 w-100 text-light bg-dark p-3 px-3 mx-0 rounded m-1"
+            <button type="submit" {% if product.amount < 1  %} disabled {% endif %} class="my-2 w-100 text-light bg-dark p-3 px-3 mx-0 rounded m-1"
               style="border: none">Add to cart <i class="fas fa-shopping-bag text-white mx-2"></i></button>
           </div>
           <div class="col-6 my-2">
@@ -265,8 +266,8 @@ color: white;
           {% csrf_token %}
           <div class="form-group">
             <div class="input-rating">
-              <strong class="mx-2 text-uppercase">Your Rating: </strong>
-              <div class="choice-title mx-2">
+              <strong class="mx-0 text-uppercase">Your Rating: </strong>
+              <div class="choice-title mx-0">
                 <input type="radio" name="rate" value="1" id="rating-1"><label class="px-2 py-1" for="rating-1"><i
                     class="fa fa-star" aria-hidden="true"></i></label>
                 <input type="radio" name="rate" value="2" id="rating-2"><label class="px-2 py-1" for="rating-2"><i
@@ -299,7 +300,7 @@ color: white;
       <!--Loop starts here-->
       {% for item in prod %}
       <div class="col-6 mx-0 px-1 ">
-        <a href="">
+        <a href="{% url 'product_detail' item.id item.slug %}">
           <div class="w-100 rounded">
             <img class="w-100 rounded" id="listimg"
               src="{{ item.image.url }}"
