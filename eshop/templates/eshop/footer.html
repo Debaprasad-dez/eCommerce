@@ -67,10 +67,12 @@
     </div>
 </div>
 <br>
+{% if user.id is not None %}
 <div class="container text-center my-2">
     <a href="{% url 'logout_func' %}" class="bg-dark text-white px-5 py-2 rounded-pill" href="">Logout</a>
 </div>
-<br>
+{% endif %}
+<br><br>
 <div class="text-center text-white bg-dark mb-0 fixed-bottom">
     <p class="mb-0 py-2"><i class="fa fa-copyright" aria-hidden="true"></i> Buckler 2021</p>
 </div>
