@@ -104,7 +104,6 @@ def category_offer(request, id, slug):
         print(i.offer>=catdata.minimum_Offer)
     return render(request, 'eshop/category_offers.html', context)
 
-
 def search(request):
     if request.method == 'POST':  # check post
         form = SearchForm(request.POST)
