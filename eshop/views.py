@@ -1,5 +1,5 @@
 from django import http
-from django.db.models.query_utils import subclasses
+from django.db.models.query_utils import PathInfo, subclasses
 from django.shortcuts import render, HttpResponse, HttpResponseRedirect
 from django.template.loader import render_to_string
 from django.http import JsonResponse
@@ -92,7 +92,6 @@ def category_products(request, id, slug):
 
     return render(request, 'eshop/category_products.html', context)
 
-
 def category_offer(request, id, slug):
     catdata = Category.objects.get(pk=id)
     products = Product.objects.filter(Q(category__parent_id=id) | Q(category_id=id))
@@ -151,9 +150,14 @@ def product_detail(request,id,slug):
     query = request.GET.get('q')
     category = Category.objects.all()
     product = Product.objects.get(pk=id)
+    subcat = Category.objects.filter(child__id=id)
+    for i in subcat:
+        prod = Product.objects.filter(category_id = i.id).exclude(id=id)
+        print(prod)
+    # print(list(subcat))
     images = Images.objects.filter(product_id=id)
     context = {'product': product,'category': category,
-               'images': images, 'range': range(1, (len(images)+1)),
+               'images': images, 'range': range(1, (len(images)+1)), 'prod': prod,
                }
     if product.variant !="None": # Product have variants
         if request.method == 'POST': #if we select color

@@ -21,11 +21,12 @@
       var selectedObj = ui.item;
     }
   </script>
-
+  {% load myapptags %}
+  {% settingslist as setting %}
   <nav class="mb-1 navbar navbar-expand-lg navbar-dark fixed-top bg-white">
     <div class="container">
       <a class="navbar-brand" href="/">
-        <img style="width: 100px;" src="{% static 'images/buck_logo.png' %}" alt="">
+        <img style="width: 100px;" src="{{ setting.icon.url }}" alt="">
       </a>
       <ul class="navbar-nav mr-auto">
         <li class="nav-item dropdown">
@@ -88,11 +89,11 @@
       <button class="navbar-toggler mx-0" type="button" aria-expanded="false" aria-label="Toggle navigation">
         <a href=""><i class="fas fa-phone text-dark"></i></a>
       </button>
-      {% load myapptags %}
       {% if user.id is not None %}
+      {% wishlistcount user.id as wishlist %}
       <button class="navbar-toggler mx-0" type="button" aria-controls="navbarSupportedContent-333" aria-expanded="false"
         aria-label="Toggle navigation">
-        <a href="{% url 'wishlist' %}"><i class="far fa-heart text-dark"></i></a>
+        <a href="{% url 'wishlist' %}"><i class="fas fa-heart {% if wishlist %} text-danger {% else %} text-dark {% endif %}"></i></a>
       </button>
       {% shopcartcount user.id as shopcart %}
       <button class="navbar-toggler mx-0" type="button" aria-controls="navbarSupportedContent-333" aria-expanded="false"

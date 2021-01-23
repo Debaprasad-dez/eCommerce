@@ -24,4 +24,4 @@ def wishlistcount(userid):
 
 @register.simple_tag
 def settingslist():
-    return Setting.objects.all()
+    return Setting.objects.all().last()

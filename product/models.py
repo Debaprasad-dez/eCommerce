@@ -73,7 +73,7 @@ class Product(models.Model):
         ('Deal of the month', 'Deal of the month'),
     )
 
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='child', related_query_name='child')
     brand_name = models.CharField(max_length=50)
     title = models.CharField(max_length=150)
     keywords = models.TextField()

@@ -22,6 +22,7 @@ class Setting(models.Model):
     smtppassword = models.CharField(blank=True,max_length=10)
     smtpport = models.CharField(blank=True,max_length=5)
     icon = models.ImageField(blank=True,upload_to='images/')
+    assured_logo = models.ImageField(blank=True,upload_to='images/')
     facebook = models.CharField(blank=True,max_length=50)
     instagram = models.CharField(blank=True,max_length=50)
     twitter = models.CharField(blank=True,max_length=50)
@@ -81,7 +82,6 @@ class ContactForm(forms.ModelForm):
             'address' : Textarea(attrs={'class': 'w-100 px-2 mx-0 my-1', 'required': 'True', "style": "background-color: rgba(0, 128, 0, 0.13);border: none;height: 80px;border-radius: 10px;", 'placeholder':'Your Address','rows':'5'}),
             'message' : Textarea(attrs={'class': 'w-100 px-2 mx-0 my-1', 'required': 'True', "style": "background-color: rgba(0, 128, 0, 0.13);border: none;height: 80px;border-radius: 10px;", 'placeholder':'Your Message','rows':'5'}),
             'deals_in': forms.CheckboxSelectMultiple(
-                attrs={'type': 'checkbox', 'style': 'list-style-type: none;', 'name': 'Deal In'},
                 choices=DEAL,
             ),
         }
