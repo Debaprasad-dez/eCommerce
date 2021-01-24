@@ -34,7 +34,7 @@ def login_form(request):
             return HttpResponseRedirect('/')
         else:
             messages.warning(
-                request, "Login Error !! Username or Password is incorrect")
+                request, "Login error!! Username or password is incorrect")
             return HttpResponseRedirect('/login')
     # Return an 'invalid login' error message.
     #category = Category.objects.all()
@@ -63,23 +63,27 @@ def registerPage(request):
     if request.method == 'POST':
         form = SignUpForm(request.POST, request.FILES)
         if form.is_valid():
-            user = form.save()
-            user.is_active = False
-            user.save()
-            current_site = get_current_site(request)
-            mail_subject = 'Activate your account.'
-            message = render_to_string('user/email_template.html', {
-                        'user': user,
-                        'domain': current_site.domain,
-                        'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-                        'token': account_activation_token.make_token(user),
-                    })
-            to_email = form.cleaned_data.get('email')
-            send_mail(mail_subject, message, 'expresstotell@gmail.com', [to_email], fail_silently=False,)
-            print(send_mail)
-            print(to_email)
-            print(message)
-            return render(request, 'user/confirm_email.html')
+            email = form.cleaned_data.get('email')
+            if User.objects.filter(email=email).exists():
+                messages.warning(request, "Signup error!! Invalid email or email already taken")
+            else: 
+                user = form.save()
+                user.is_active = False
+                user.save()
+                current_site = get_current_site(request)
+                mail_subject = 'Activate your account.'
+                message = render_to_string('user/email_template.html', {
+                            'user': user,
+                            'domain': current_site.domain,
+                            'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+                            'token': account_activation_token.make_token(user),
+                        })
+                to_email = form.cleaned_data.get('email')
+                send_mail(mail_subject, message, 'expresstotell@gmail.com', [to_email], fail_silently=False,)
+                print(send_mail)
+                print(to_email)
+                print(message)
+                return render(request, 'user/confirm_email.html')
             
     context = {'form': form}
     return render(request, 'user/signup_form.html', context)
