@@ -26,7 +26,9 @@
   <nav class="mb-1 navbar navbar-expand-lg navbar-dark fixed-top bg-white">
     <div class="container">
       <a class="navbar-brand" href="/">
+        {% if setting.icon %}
         <img style="width: 100px;" src="{{ setting.icon.url }}" alt="">
+        {% endif %}
       </a>
       <ul class="navbar-nav mr-auto">
         <li class="nav-item dropdown">
@@ -85,9 +87,11 @@
       </div>
       <!--pc search end-->
       <!--mobile icons start-->
+      {% if setting.phone %}
       <button class="navbar-toggler mx-0" type="button" aria-expanded="false" aria-label="Toggle navigation">
         <a href="tel:{{ setting.phone }}"><i class="fas fa-phone text-dark"></i></a>
       </button>
+      {% endif %}
       {% if user.id is not None %}
       {% wishlistcount user.id as wishlist %}
       <button class="navbar-toggler mx-0" type="button" aria-controls="navbarSupportedContent-333" aria-expanded="false"
@@ -179,9 +183,11 @@
         </div>
       </div>
       <!--pc icons start-->
+      {% if setting.phone %}
       <a class="mx-4" href="tel:{{ setting.phone }}" id="peep2">
         <i class="fas fa-phone text-dark"></i>
       </a>
+      {% endif %}
       {% if user.id is None %}
       <a class="mx-4 text-dark" style="font-weight: 600;" href="{% url 'login_form' %}" id="peep2">
         Login

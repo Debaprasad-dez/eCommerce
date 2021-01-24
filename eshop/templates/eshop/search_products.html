@@ -32,9 +32,14 @@
 											class="fa fa-star text-warning"></span></a>
 
 								</div>
+								{% if rs.variant == "None" %}
 								<a href="{% url 'addtoshopcart' rs.id %}" class="my-2 w-md-100 text-light bg-dark p-1 px-3 mx-0 rounded"
 									style="border: none">Add to cart</a>
-								<a href="{% url 'addtowishlist' rs.id %}" class="my-2 rounded-circle ml-1"
+								{% else %}
+								<a href="{% url 'product_detail' rs.id rs.slug %}" class="my-2 w-md-100 text-light bg-dark p-1 px-3 mx-0 rounded"
+									style="border: none">Detail</a>
+								{% endif %}
+								<a href="{% url 'addtowishlist' rs.id %}" class="btn-sm my-2 rounded-circle ml-1"
 									style="border: none;height: 32px !important;width: 32px;background: red;object-fit: cover;object-position: center;"><i
 										class="far fa-heart text-white"></i></a>
 							</div>

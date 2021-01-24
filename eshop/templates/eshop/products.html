@@ -110,9 +110,11 @@ color: white;
       <h4 class="my-0 py-0"><strong>{{ product.title }}</strong></h4>
       <!--If buckler assured-->
       {% if product.assured %}
-      <img style="height: 15px;"
+      {% if setting.assured_logo %}
+      <img style="width: 100px;"
         src="{{ setting.assured_logo.url }}"
-        alt=""> <i class="fas fa-check-circle    "></i>
+        alt="">
+      {% endif %}
       {% endif %}
       <!--If buckler assured close-->
 
@@ -317,9 +319,13 @@ color: white;
                 <a class="small disabled text-dark mt-0 pt-0" style="font-family: roboto;" href=""><strike><i class="fas fa-rupee-sign    "></i>
                     {{ item.prevprice }}</strike></a>
                 <p class="text-danger p-0 m-0 small">{{ item.offer }}% off</p>
-              </div>
-              <a class="my-2 w-md-100 text-light bg-dark p-1 px-3 mx-0 rounded" style="border: none">Detail</a>
-              <a class="my-2 rounded-circle ml-1"
+              </div> <br>
+              {% if item.variant == 'None' %}
+              <a href="{% url 'addtoshopcart' item.id %}" class="my-2 w-md-100 text-light bg-dark p-1 px-3 mx-0 rounded" style="border: none">Add to cart</a>
+              {% else %}
+              <a href="{% url 'product_detail' item.id item.slug %}" class="my-2 w-md-100 text-light bg-dark p-1 px-3 mx-0 rounded" style="border: none">Detail</a>
+              {% endif %}
+              <a class="btn-sm my-2 rounded-circle ml-1"
                 style="border: none;height: 32px !important;width: 32px;background: red;object-fit: cover;object-position: center;"><i
                   class="far fa-heart text-white"></i></a>
             </div>
